@@ -20,12 +20,21 @@ Resources:
       TemplateURL:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/Vpc-stack.yml"
       Parameters:
-        S3BucketName:
-          Ref: S3BucketName
-        VPCID:
-          Ref: VPCID
-        Environment:
-          Ref: Environment
+        Environment:  !Ref Environment
       Tags:
         - Key: Name
           Value: VPCStack
+  SecurityStack:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: 
+      - VPCStack
+    Properties:
+      TemplateURL:
+        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/security-stack.yml"
+      Parameters:
+        S3BucketName: !Ref S3Bucket
+        VPCID: !Ref MyVPC
+        Environment: !Ref Environment
+      Tags:
+        - Key: Name
+          Value: SecurityStack

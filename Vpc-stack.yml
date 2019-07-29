@@ -29,6 +29,9 @@ Parameters:
     Type: String
     Description: Enter Prefix that should be used for Tags.
 Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
   MyVPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -105,42 +108,3 @@ Resources:
     Properties: 
       RouteTableId: !Ref PublicRouteTable
       SubnetId: !Ref PublicSubnet2
-  WebDMZSecurityGroup:
-    DependsOn: MyVPC
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupName: CloudWebDMZ
-      GroupDescription: Cloud WebServer DMZ Group
-      VpcId: !Ref MyVPC
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 3306
-          ToPort: 3306
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 2049
-          ToPort: 2049
-          CidrIp: 0.0.0.0/0
-  RDSSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties: 
-      GroupName: RDSSecurityGroup
-      GroupDescription: RDSSecurityGroup
-      VpcId: !Ref MyVPC
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 3306
-          ToPort: 3306
-          SourceSecurityGroupId: !Ref WebDMZSecurityGroup
