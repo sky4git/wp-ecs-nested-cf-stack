@@ -1,0 +1,26 @@
+[
+    {
+    "ParameterKey": "VPCCIDR",
+    "ParameterValue": "172.21.1.0/24"
+    },
+    {
+    "ParameterKey": "PublicSubnet1",
+    "ParameterValue": "172.21.1.0/26"
+    },
+    {
+    "ParameterKey": "PublicSubnet2",
+    "ParameterValue": "172.21.1.64/26"
+    },
+    {
+    "ParameterKey": "PrivateSubnet1",
+    "ParameterValue": "172.21.1.128/26"
+    },
+    {
+    "ParameterKey": "PrivateSubnet2",
+    "ParameterValue": "172.21.1.192/26"
+    },
+    {
+    "ParameterKey": "TagPrefix",
+    "ParameterValue": "WPECSNestedStack"
+    }
+  ]

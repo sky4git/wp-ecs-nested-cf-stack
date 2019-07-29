@@ -1,75 +1,31 @@
 AWSTemplateFormatVersion: 2010-09-09
+Description: Master stack which creates all required nested stacks
+
 Parameters:
   TemplatePath:
     Type: String
     Description: S3Bucket Path where the templates are stored
-  KeyName:
-    Type: 'AWS::EC2::KeyPair::KeyName'
-    Description: WebServer Key Pair
-  AvailabilityZonePrivate:
+  Environment:
     Type: String
-    Description: Select private subnet availability zone
-    Default: ap-southeast-2b
+    Description: Select the appropriate environment
     AllowedValues:
-      - ap-southeast-2a
-      - ap-southeast-2b
-      - ap-southeast-2c
-  RDSDBEngine: 
-    Type: String
-    Description: Database Engine Version
-    Default: aurora
-    AllowedValues:
-      - aurora
-      - aurora-mysql
-      - aurora-postgresql
-  RDSInstaceType:
-    Type: String
-    Description: Database instace type
-    Default: db.r5.large
-    AllowedValues:
-      - db.t2.small
-      - db.t2.medium
-      - db.t3.small
-      - db.t3.medium
-      - db.r3.large
-      - db.r3.xlarge
-      - db.r3.2xlarge
-      - db.r3.4xlarge
-      - db.r3.8xlarge
-      - db.r4.large
-      - db.r4.xlarge
-      - db.r4.2xlarge
-      - db.r4,4xlarge
-      - db.r4.8xlarge
-      - db.r4.16xlarge
-      - db.r5.large
-      - db.r5.2xlarge
-      - db.r5.4xlarge
-      - db.r5.12xlarge
-  MasterUsername: 
-    Default: 'aakashdb'
-    Type: String
-    Description: Specify database root username
-  MasterUserPassword: 
-    Default: 'aakashdb'
-    Type: String
-    Description: Specify database password
-  DBName:
-    Default: 'aakashdb'
-    Type: String
-    Description: Database name
+      - dev
+      - test
+      - uat
+      - prod
 Resources:
-  MyVPC:
-    Type: AWS::EC2::VPC
+  VPCStack:
+    Type: "AWS::CloudFormation::Stack"
     Properties:
-      CidrBlock: !Ref CidrBlock
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
-      InstanceTenancy: default
+      TemplateURL:
+        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/Vpc-stack.yml"
+      Parameters:
+        S3BucketName:
+          Ref: S3BucketName
+        VPCID:
+          Ref: VPCID
+        Environment:
+          Ref: Environment
       Tags:
-      - Key: Name
-        Value: CloudVPC
-Outputs: 
-  RDSEndpoint:
-    Description: Database endpoint
-    Value: !GetAtt RDSAurora.Endpoint.Address  
+        - Key: Name
+          Value: VPCStack
