@@ -1,1 +1,1 @@
-# Wordpress Nested Cloudofmration stack
+# Wordpress Nested CloudFormation stack
