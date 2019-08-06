@@ -83,6 +83,13 @@ Resources:
         Image: 'aws/codebuild/standard:2.0'
         ImagePullCredentialsType: CODEBUILD
         Type: LINUX_CONTAINER
+        EnvironmentVariables: 
+          - Name: TEMPLATE_BUCKET
+            Type: PLAINTEXT
+            Value: !Ref S3Bucket
+          - Name: TEMPLATE_PREFIX
+            Type: PLAINTEXT
+            Value: !Ref Environment
       Source:
         Auth: 
           Type: OAUTH
@@ -106,7 +113,7 @@ Resources:
               ExcludeMatchedPattern: true
 Outputs:
   S3BucketName:
-    Description: S3 bucket name
+    Description: S3 Bucket Name where template will be stored
     Value: !Ref S3Bucket
   CodeBuildProject:
     Description: Codebuild project name

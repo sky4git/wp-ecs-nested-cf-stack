@@ -18,12 +18,12 @@ Resources:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL:
-        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/Vpc-stack.yml"
-      Parameters:
-        Environment:  !Ref Environment
+        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/vpc-stack.yml"
       Tags:
         - Key: Name
           Value: VPCStack
+        - Key: Environment
+          Value: !Ref Environment
   SecurityStack:
     Type: "AWS::CloudFormation::Stack"
     DependsOn: 
@@ -32,9 +32,10 @@ Resources:
       TemplateURL:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/security-stack.yml"
       Parameters:
-        S3BucketName: !Ref S3Bucket
         VPCID: !Ref MyVPC
-        Environment: !Ref Environment
       Tags:
         - Key: Name
           Value: SecurityStack
+        - Key: Environment
+          Value: !Ref Environment
+      

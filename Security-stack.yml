@@ -1,9 +1,6 @@
 Description: Create security groups and IAM roles
 
 Parameters:
-  S3BucketName:
-    Type: String
-    Description: Name of thr S3 bucket to allow access.
   VPCID:
     Type: AWS::EC2::VPC::Id
     Description: Enter a valid VPC Id
@@ -15,7 +12,6 @@ Parameters:
       - test
       - uat
       - prod
-
 Resources:
   WebDMZSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
