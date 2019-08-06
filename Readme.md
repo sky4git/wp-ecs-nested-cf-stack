@@ -59,7 +59,7 @@ Copy S3BucketName from the outputs.
 
 ## Step 2:
 
-### Create base VPC Stack
+### Create base WPECSStack Stack
 In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are multiple YAML (*CloudFormation Templates*) & JSON (*CloudFormation Configuration*) files.
 
 **[Vpc-stack.yml](wp-ecs-nested-cf-stack/vpc-stack.yml):** is the CloudFormation template to create the base VPC, Subnets, NAT Gateways, etc which will be used.
@@ -68,5 +68,5 @@ In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are mul
 Go to `wp-ecs-nested-cf-stack` directory and execute the following AWS CLI command to create CloudFormation stack.
 
 ```bash
-aws cloudformation create-stack --stack-name WPECSNested-BaseStack --template-body file://vpc-stack.yml --parameters file://vpc-params.json
+aws cloudformation create-stack --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://WPECSStack-params.json
 ```
