@@ -1,0 +1,22 @@
+[
+    {
+        "ParameterKey": "GitHubOwner",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "GitHubSecret",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "GitHubOAuthToken",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "Environment",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "SourceGitUrl",
+        "ParameterValue": ""
+    }
+]

@@ -1,0 +1,118 @@
+Description: Create codebuild project to put our resources in S3 Bucket
+Parameters:
+  GitHubOwner:
+    Type: String
+  GitHubSecret:
+    Type: String
+    NoEcho: true
+  GitHubOAuthToken:
+    Type: String
+    NoEcho: true
+  Environment:
+    Type: String
+    Description: Select the appropriate environment
+    AllowedValues:
+      - dev
+      - test
+      - uat
+      - prod
+  SourceGitUrl:
+    Type: String
+    Description: Provide Source GitHub Repo Url  
+Resources:
+  IAMCodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: IAMCodeBuildRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "s3.amazonaws.com" 
+                - "codebuild.amazonaws.com" 
+            Action: 
+              - "sts:AssumeRole"
+  S3BucketPolicy:
+     Type: AWS::IAM::Policy
+     Properties: 
+      PolicyName: "S3BucketPolicy"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Action:
+              - "s3:CreateBucket"
+              - "s3:PutObject"
+            Resource: "*" 
+      Roles:
+        - !Ref IAMCodeBuildRole
+  CloudFormationTemplatesPolicy:
+     Type: AWS::IAM::Policy
+     Properties: 
+      PolicyName: "CloudFormationTemplatesPolicy"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Action:
+              - "cloudformation:ValidateTemplate"
+            Resource: "*" 
+      Roles:
+        - !Ref IAMCodeBuildRole
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      Tags:
+      - Key: Name
+        Value: WPStackBucket
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Description: CodeBuild Project for WPECSStack CloudFormation Templates Deployment
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: true
+      ServiceRole: !GetAtt IAMCodeBuildRole.Arn
+      Environment: 
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: 'aws/codebuild/standard:2.0'
+        ImagePullCredentialsType: CODEBUILD
+        Type: LINUX_CONTAINER
+      Source:
+        Auth: 
+          Type: OAUTH
+        Location: !Ref SourceGitUrl
+        Type: GITHUB
+        ReportBuildStatus: true
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+            - Type: BASE_REF
+              Pattern: ^refs/heads/master$
+              ExcludeMatchedPattern: false
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/.*
+            - Type: FILE_PATH
+              Pattern: READ_ME
+              ExcludeMatchedPattern: true
+Outputs:
+  S3BucketName:
+    Description: S3 bucket name
+    Value: !Ref S3Bucket
+  CodeBuildProject:
+    Description: Codebuild project name
+    Value: !Ref CodeBuildProject
+
+
+
+
+      

@@ -1,4 +1,4 @@
-# Wordpress Nested CloudFormation stack
+# Wordpress Nested CloudFormation Stack
 
 ## Step 1:
 

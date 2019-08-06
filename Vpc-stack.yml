@@ -29,9 +29,6 @@ Parameters:
     Type: String
     Description: Enter Prefix that should be used for Tags.
 Resources:
-  S3Bucket:
-    Type: AWS::S3::Bucket
-    DeletionPolicy: Retain
   MyVPC:
     Type: AWS::EC2::VPC
     Properties:

@@ -4,7 +4,7 @@ Description: Master stack which creates all required nested stacks
 Parameters:
   TemplatePath:
     Type: String
-    Description: S3Bucket Path where the templates are stored
+    Description: S3 Bucket Path where the templates are stored
   Environment:
     Type: String
     Description: Select the appropriate environment
