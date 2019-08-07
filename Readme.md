@@ -68,5 +68,7 @@ In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are mul
 Go to `wp-ecs-nested-cf-stack` directory and execute the following AWS CLI command to create CloudFormation stack.
 
 ```bash
-aws cloudformation create-stack --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://WPECSStack-params.json
+aws cloudformation validate-template --template-body file://WPECSStack.yml 
+
+aws cloudformation create-stack --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://WPECSStack-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
 ```

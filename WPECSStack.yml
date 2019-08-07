@@ -32,7 +32,7 @@ Resources:
       TemplateURL:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/security-stack.yml"
       Parameters:
-        VPCID: !Ref MyVPC
+        VPCID: !GetAtt VPCStack.Outputs.VPCID
       Tags:
         - Key: Name
           Value: SecurityStack

@@ -105,3 +105,10 @@ Resources:
     Properties: 
       RouteTableId: !Ref PublicRouteTable
       SubnetId: !Ref PublicSubnet2
+Outputs:
+  VPCID:
+    Description: VPCID
+    Value: !Ref MyVPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPCID'
+  
