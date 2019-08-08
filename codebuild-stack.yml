@@ -38,22 +38,28 @@ Resources:
   CodeBuildPolicy:
      Type: AWS::IAM::Policy
      Properties: 
-      PolicyName: "CloudWatchPolicy"
+      PolicyName: "CodeBuildPolicy"
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
           -
             Effect: "Allow"
             Action:
-              - "s3:CreateBucket"
               - "s3:PutObject"
-              - "cloudformation:ValidateTemplate"
+              - "s3:GetObject"
+              - "s3:DeleteObject"
+              - "s3:ListBucket"
+            Resource: !GetAtt S3Bucket.Arn 
+          -
+            Effect: "Allow"
+            Action:
               - "codebuild:ListConnectedOAuthAccounts"
               - "codebuild:ListRepositories"
               - "codebuild:PersistOAuthToken"
               - "codebuild:ImportSourceCredentials"
               - "cloudwatch:*"
               - "logs:*"
+              - "cloudformation:*"
             Resource: "*" 
       Roles:
         - !Ref IAMCodeBuildRole
