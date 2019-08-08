@@ -35,10 +35,10 @@ Resources:
                 - "codebuild.amazonaws.com" 
             Action: 
               - "sts:AssumeRole"
-  S3BucketPolicy:
+  CodeBuildPolicy:
      Type: AWS::IAM::Policy
      Properties: 
-      PolicyName: "S3BucketPolicy"
+      PolicyName: "CloudWatchPolicy"
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -47,20 +47,13 @@ Resources:
             Action:
               - "s3:CreateBucket"
               - "s3:PutObject"
-            Resource: "*" 
-      Roles:
-        - !Ref IAMCodeBuildRole
-  CloudFormationTemplatesPolicy:
-     Type: AWS::IAM::Policy
-     Properties: 
-      PolicyName: "CloudFormationTemplatesPolicy"
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          -
-            Effect: "Allow"
-            Action:
               - "cloudformation:ValidateTemplate"
+              - "codebuild:ListConnectedOAuthAccounts"
+              - "codebuild:ListRepositories"
+              - "codebuild:PersistOAuthToken"
+              - "codebuild:ImportSourceCredentials"
+              - "cloudwatch:*"
+              - "logs:*"
             Resource: "*" 
       Roles:
         - !Ref IAMCodeBuildRole
