@@ -11,6 +11,8 @@ environment_variables:
       vpc-params.json
 phases:
   install:
+    runtime-versions:
+      docker: 18      
     commands:
       npm install jsonlint -g
   pre_build:
