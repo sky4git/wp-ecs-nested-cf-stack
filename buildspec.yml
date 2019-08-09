@@ -59,8 +59,8 @@ phases:
       - echo "Start Creating stacks"
       - # rm WPECSStack-params.json
       - # echo '[{"ParameterKey":"TemplatePath","ParameterValue":"$TEMPLATE_BUCKET"},{"ParameterKey":"Environment","ParameterValue":"$TEMPLATE_PREFIX"}]' > WPECSStack-params.json
-      - sed -i -e  "s/S3_BUCKET_NAME_PLACEHOLDER/$TEMPLATE_BUCKET" WPECSStack-params.json
-      - sed -i -e  "s/ENVIRONMENT_PLACEHOLDER/$TEMPLATE_PREFIX" WPECSStack-params.json
+      - sed -i -e  "s/S3_BUCKET_NAME_PLACEHOLDER/$TEMPLATE_BUCKET/" WPECSStack-params.json
+      - sed -i -e  "s/ENVIRONMENT_PLACEHOLDER/$TEMPLATE_PREFIX/" WPECSStack-params.json
       - aws cloudformation validate-template --template-body file://WPECSStack.yml  
       - aws cloudformation create-stack --stack-name WPECSCodeBuild --template-body file://WPECSStack.yml --parameters file://WPECSStack-params.json 
 artifacts:
