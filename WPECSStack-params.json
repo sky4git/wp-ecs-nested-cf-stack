@@ -1,10 +1,10 @@
 [
     {
         "ParameterKey": "TemplatePath",
-        "ParameterValue": ""
+        "ParameterValue": "S3_BUCKET_NAME_PLACEHOLDER"
     },
     {
         "ParameterKey": "Environment",
-        "ParameterValue": ""
+        "ParameterValue": "ENVIRONMENT_PLACEHOLDER"
     }
 ]

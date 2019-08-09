@@ -47,9 +47,12 @@ Resources:
             Action:
               - "s3:PutObject"
               - "s3:GetObject"
+              - "s3:GetObjectVersion"
               - "s3:DeleteObject"
               - "s3:ListBucket"
-            Resource: !GetAtt S3Bucket.Arn 
+            Resource: 
+              - !GetAtt S3Bucket.Arn 
+              - !Join ['', [ !GetAtt S3Bucket.Arn, '/*'] ] 
           -
             Effect: "Allow"
             Action:
@@ -57,10 +60,30 @@ Resources:
               - "codebuild:ListRepositories"
               - "codebuild:PersistOAuthToken"
               - "codebuild:ImportSourceCredentials"
-              - "cloudwatch:*"
-              - "logs:*"
-              - "cloudformation:*"
             Resource: "*" 
+          -
+            Effect: "Allow"
+            Action:
+              - "cloudformation:Get*"
+              - "cloudformation:Describe*"
+              - "cloudformation:List*"
+              - "cloudformation:CreateStack"
+              - "cloudformation:DeleteStack"
+              - "cloudformation:ValidateTemplate" 
+              - "cloudformation:GetTemplate"
+              - "cloudformation:DescribeStackResources"
+              - "cloudformation:DescribeStackEvents"
+              - "cloudformation:DescribeStacks"
+              - "cloudformation:UpdateStack"
+            Resource: "*" 
+          -
+            Effect: "Allow"
+            Action:
+              - "logs:CreateLogGroup"
+              - "logs:CreateLogStream"
+              - "logs:PutLogEvents"
+            Resource: "*" 
+           
       Roles:
         - !Ref IAMCodeBuildRole
   S3Bucket:
