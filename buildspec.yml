@@ -56,11 +56,12 @@ phases:
             sed -i -e "s/TEMPLATE_PATH_PLACEHOLDER/$TEMPLATE_BUCKET\/$TEMPLATE_PREFIX/" $conf
           fi
         done
-      - echo "Start Creating stacks"
-      - # rm WPECSStack-params.json
-      - # echo '[{"ParameterKey":"TemplatePath","ParameterValue":"$TEMPLATE_BUCKET"},{"ParameterKey":"Environment","ParameterValue":"$TEMPLATE_PREFIX"}]' > WPECSStack-params.json
-      - sed -i -e  "s/S3_BUCKET_NAME_PLACEHOLDER/$TEMPLATE_BUCKET/" WPECSStack-params.json
+      - echo "Updating parameter values in WPECSStack-params.json"
+      - sed -i -e  "s/S3_BUCKET_PATH/$TEMPLATE_BUCKET___ENVIRONMENT_PREFIX/" WPECSStack-params.json
+      - sed -i -e  "s/___ENVIRONMENT_PREFIX/$TEMPLATE_PREFIX/" WPECSStack-params.json
       - sed -i -e  "s/ENVIRONMENT_PLACEHOLDER/$TEMPLATE_PREFIX/" WPECSStack-params.json
+      - echo WPECSStack-params.json
+      - echo "Start Creating stacks"
       - aws cloudformation validate-template --template-body file://WPECSStack.yml  
       - aws cloudformation create-stack --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://WPECSStack-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND 
 artifacts:
