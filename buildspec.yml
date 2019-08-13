@@ -61,7 +61,7 @@ phases:
       #- sed -i -e  "s|___ENVIRONMENT_PREFIX|$TEMPLATE_PREFIX|" config-params.json
       - sed -i -e  "s|ENVIRONMENT_PLACEHOLDER|$TEMPLATE_PREFIX|" config-params.json
       - cat config-params.json
-      - checking stack exits
+      #- checking stack exits
       #- aws cloudformation stack-exists --stack-name WPECSStack
       - echo "Start Creating stacks"
       - aws cloudformation validate-template --template-body file://WPECSStack.yml  
