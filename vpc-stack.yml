@@ -44,7 +44,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: 'ap-southeast-2b'
-      CidrBlock: !Ref PublicSubnet1
+      CidrBlock: !Ref PublicSubnet1CIDR
       MapPublicIpOnLaunch: true
       VpcId: !Ref MyVPC
       Tags:
@@ -55,12 +55,34 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: 'ap-southeast-2a'
-      CidrBlock: !Ref PublicSubnet2
+      CidrBlock: !Ref PublicSubnet2CIDR
       MapPublicIpOnLaunch: false
       VpcId: !Ref MyVPC
       Tags:
       - Key: Name
         Value: !Sub ${TagPrefix}-PublicSubnet2
+  PrivateSubnet1:
+    DependsOn: MyVPC
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: 'ap-southeast-2a'
+      CidrBlock: !Ref PrivateSubnet1CIDR
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref MyVPC
+      Tags:
+      - Key: Name
+        Value: !Sub ${TagPrefix}-PrivateSubnet1
+  PrivateSubnet2:
+    DependsOn: MyVPC
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: 'ap-southeast-2b'
+      CidrBlock: !Ref PrivateSubnet2CIDR
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref MyVPC
+      Tags:
+      - Key: Name
+        Value: !Sub ${TagPrefix}-PrivateSubnet2
   PublicSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     DependsOn: 

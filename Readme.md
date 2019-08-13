@@ -1,3 +1,5 @@
+[AWS Codebuild Status](https://codebuild.ap-southeast-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiT2h6T1ZCc1FxTlVMSGJENktZN21UcWFFZXpOcDdSU2ZySEJuSVZrMDkvbjF3YlJvcHBsb0JtTnB6Q2RMWGdCTURYSFd6MzdVTndhdk1sNmdJMXZJV0hNPSIsIml2UGFyYW1ldGVyU3BlYyI6IjB1YjlVRGRMeW5PNFp0UEQiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
 # Wordpress Nested CloudFormation Stack
 
 ## Step 1

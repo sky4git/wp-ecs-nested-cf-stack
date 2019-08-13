@@ -18,22 +18,22 @@ Parameters:
     Description: CIDR block should be used to create the VPC (e.g. 172.21.1.0/24)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.0/24)
-  PublicSubnet1:
+  PublicSubnet1CIDR:
     Type: String
     Description: CIDR block should be used to create the public subnet in AZ1 (e.g. 172.21.1.0/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.0/26)
-  PublicSubnet2:
+  PublicSubnet2CIDR:
     Type: String
     Description: CIDR block should be used to create the public subnet in AZ2 (e.g. 172.21.1.64/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.64/26)
-  PrivateSubnet1:
+  PrivateSubnet1CIDR:
     Type: String
     Description: CIDR block should be used to create the public subnet in AZ1 (e.g. 172.21.1.128/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.128/26)
-  PrivateSubnet2:
+  PrivateSubnet2CIDR:
     Type: String
     Description: CIDR block should be used to create the public subnet in AZ2 (e.g. 172.21.1.192/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
@@ -49,8 +49,10 @@ Resources:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/vpc-stack.yml"
       Parameters:
         VPCCIDR: !Ref VPCCIDR
-        PublicSubnet1: !Ref PublicSubnet1
-        PublicSubnet2: !Ref PublicSubnet2
+        PublicSubnet1: !Ref PublicSubnet1CIDR
+        PublicSubnet2: !Ref PublicSubnet2CIDR
+        PrivateSubnet1: !Ref PrivateSubnet1CIDR
+        PrivateSubnet2: !Ref PrivateSubnet2CIDR
         TagPrefix: !Ref TagPrefix
       Tags:
         - Key: Name
