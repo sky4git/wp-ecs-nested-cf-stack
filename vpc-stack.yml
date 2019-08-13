@@ -1,5 +1,8 @@
 Description: Creates VPC and required components of VPC
-
+Parameters:
+  TagPrefix:
+    Type: String
+    Description: Enter Prefix that should be used for Tags.
 Resources:
   MyVPC:
     Type: AWS::EC2::VPC
