@@ -65,7 +65,7 @@ phases:
       #- aws cloudformation stack-exists --stack-name WPECSStack
       - echo "Start Creating stacks"
       - aws cloudformation validate-template --template-body file://WPECSStack.yml  
-      - aws cloudformation deploy --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND 
+      - aws cloudformation create-stack --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND 
       #- (aws cloudformation deploy \
         #   --template-file WPECSStack.yml \
         #   --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
