@@ -49,10 +49,10 @@ Resources:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/vpc-stack.yml"
       Parameters:
         VPCCIDR: !Ref VPCCIDR
-        PublicSubnet1: !Ref PublicSubnet1CIDR
-        PublicSubnet2: !Ref PublicSubnet2CIDR
-        PrivateSubnet1: !Ref PrivateSubnet1CIDR
-        PrivateSubnet2: !Ref PrivateSubnet2CIDR
+        PublicSubnet1CIDR: !Ref PublicSubnet1CIDR
+        PublicSubnet2CIDR: !Ref PublicSubnet2CIDR
+        PrivateSubnet1CIDR: !Ref PrivateSubnet1CIDR
+        PrivateSubnet2CIDR: !Ref PrivateSubnet2CIDR
         TagPrefix: !Ref TagPrefix
       Tags:
         - Key: Name
