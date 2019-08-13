@@ -4,14 +4,6 @@ Parameters:
   VPCID:
     Type: AWS::EC2::VPC::Id
     Description: Enter a valid VPC Id
-  Environment:
-    Type: String
-    Description: Select the appropriate environment
-    AllowedValues:
-      - dev
-      - test
-      - uat
-      - prod
 Resources:
   WebDMZSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'

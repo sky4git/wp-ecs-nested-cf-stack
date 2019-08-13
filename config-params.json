@@ -1,5 +1,13 @@
 [
     {
+        "ParameterKey": "TemplatePath",
+        "ParameterValue": "S3_BUCKET_PATH"
+    },
+    {
+        "ParameterKey": "Environment",
+        "ParameterValue": "ENVIRONMENT_PLACEHOLDER"
+    },
+    {
         "ParameterKey": "VPCCIDR",
         "ParameterValue": "172.21.1.0/24"
     },

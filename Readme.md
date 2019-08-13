@@ -62,13 +62,16 @@ Copy S3BucketName from the outputs.
 ### Create base WPECSStack Stack
 In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are multiple YAML (*CloudFormation Templates*) & JSON (*CloudFormation Configuration*) files.
 
-**[Vpc-stack.yml](wp-ecs-nested-cf-stack/vpc-stack.yml):** is the CloudFormation template to create the base VPC, Subnets, NAT Gateways, etc which will be used.
-**[vpc-params.json](wp-ecs-nested-cf-stack/vpc-params.json):** is the parameters file which contains the parameter values for the CFN template. 
+**[vpc-stack.yml](wp-ecs-nested-cf-stack/vpc-stack.yml):** is the CloudFormation template to create the base VPC, Subnets, NAT Gateways, etc which will be used.
+**[security-stack.yml](wp-ecs-nested-cf-stack/security-stack.yml):** is the CloudFormation template to create the SecurityGroups.
+**[config-params.json](wp-ecs-nested-cf-stack/cofig-params.json):** is the parameters file which contains the parameter values for the CFN template. 
 
-Go to `wp-ecs-nested-cf-stack` directory and execute the following AWS CLI command to create CloudFormation stack.
+To create a new enviroment, just update ***config-params.json*** file with the new values and push the changes in github.
+
+To change the environment type to you will need to update Enviroment variable in your CodeBuild project.
+You can either update it from Console or you can update it from CLI command line. For example,
 
 ```bash
-aws cloudformation validate-template --template-body file://WPECSStack.yml 
-
-aws cloudformation create-stack --stack-name WPECSStack --template-body file://WPECSStack.yml --parameters file://WPECSStack-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+aws codebuild update-project --name "CodebuidProjectName" --environment "type=LINUX_CONTAINER,image=aws/codebuild/standard:2.0,computeType=BUILD_GENERAL1_SMALL,environmentVariables=[{name=TEMPLATE_BUCKET,value=bucket_name_here,type=PLAINTEXT},{name=TEMPLATE_PREFIX,value=prod,type=PLAINTEXT}],imagePullCredentialsType=CODEBUILD"
 ```
+Please replace *CodebuidProjectName* with your actual project name and *bucket_name_here* with your S3 bucket name.
