@@ -33,6 +33,7 @@ Resources:
               Service:
                 - "s3.amazonaws.com" 
                 - "codebuild.amazonaws.com" 
+                - "cloudformation.amazonaws.com"
             Action: 
               - "sts:AssumeRole"
   CodeBuildPolicy:
@@ -64,21 +65,28 @@ Resources:
           -
             Effect: "Allow"
             Action:
+              - "cloudformation:ValidateTemplate"
               - "cloudformation:Get*"
               - "cloudformation:Describe*"
               - "cloudformation:List*"
+            Resource: "*" 
+          -
+            Effect: "Allow"
+            Action:
               - "cloudformation:CreateStack"
               - "cloudformation:DeleteStack"
-              - "cloudformation:ValidateTemplate" 
               - "cloudformation:GetTemplate"
               - "cloudformation:DescribeStackResources"
               - "cloudformation:DescribeStackEvents"
               - "cloudformation:DescribeStacks"
               - "cloudformation:UpdateStack"
             Resource:
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-dev*'
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-test*'
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-prod*' 
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-dev:*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-test:*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-prod:*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-dev:*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-test:*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-prod:*'
           -
             Effect: "Allow"
             Action:
