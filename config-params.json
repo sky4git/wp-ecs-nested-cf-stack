@@ -29,6 +29,6 @@
     },
     {
         "ParameterKey": "TagPrefix",
-        "ParameterValue": "WPECSNestedStack"
+        "ParameterValue": "dev"
     }
 ]
