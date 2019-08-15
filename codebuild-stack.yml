@@ -106,6 +106,11 @@ Resources:
               - "ec2:Describe*"
               - "ec2:CreateVpc"
               - "ec2:DeleteVpc"
+              - "ec2:ModifyVpcAttribute"
+              - "ec2:AssociateVpcCidrBlock"
+              - "ec2:DisassociateVpcCidrBlock"
+              - "ec2:AssociateSubnetCidrBlock"
+              - "ec2:DisassociateSubnetCidrBlock"
               - "ec2:CreateInternetGateway"
               - "ec2:DeleteInternetGateway"
               - "ec2:AttachInternetGateway"
@@ -125,7 +130,29 @@ Resources:
               - "ec2:DeleteTags"
               - "ec2:AttachNetworkInterface"
               - "ec2:DetachNetworkInterface"
-            Resource: "*"            
+              - "ec2:CreateVolume"
+              - "ec2:AttachVolume"
+              - "ec2:DeleteVolume"
+              - "ec2:DetachVolume"
+              - "ec2:MonitorInstances"
+              - "ec2:RebootInstances"
+              - "ec2:ReleaseAddress"
+              - "ec2:RunInstances"
+              - "ec2:StartInstances"
+              - "ec2:StopInstances"
+              - "ec2:TerminateInstances"
+              - "ec2:UnmonitorInstances"
+              - "ec2:AuthorizeSecurityGroupIngress"
+            Resource: 
+              - !Sub 'arn:aws:ec2:${AWS::Region}::image/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}::vpc/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:instance/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:internet-gateway/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:key-pair/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:network-interface/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:security-group/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:subnet/*'
+              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:volume/*'
       Roles:
         - !Ref IAMCodeBuildRole
   S3Bucket:
