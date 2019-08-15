@@ -57,6 +57,12 @@ Resources:
           -
             Effect: "Allow"
             Action:
+              - "codebuild:CreateWebhook"
+              - "codebuild:DeleteWebhook"
+              - "codebuild:CreateProject"
+              - "codebuild:UpdateProject"
+              - "codebuild:DeleteProject"
+              - "codebuild:ListProjects"
               - "codebuild:ListConnectedOAuthAccounts"
               - "codebuild:ListRepositories"
               - "codebuild:PersistOAuthToken"
@@ -81,9 +87,9 @@ Resources:
               - "cloudformation:DescribeStacks"
               - "cloudformation:UpdateStack"
             Resource:
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-dev/*'
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-test/*'
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-prod/*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-dev*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-test*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/WPECSStack-prod*'
               - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-dev/*'
               - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-test/*'
               - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-prod/*'
