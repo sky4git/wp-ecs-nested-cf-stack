@@ -55,6 +55,16 @@ aws cloudformation validate-template --template-body file://codebuild-stack.yml
 aws cloudformation create-stack --stack-name WPECSCodeBuild --template-body file://codebuild-stack.yml --parameters file://codebuild-params.json --capabilities CAPABILITY_NAMED_IAM
 
 aws cloudformation describe-stacks --stack-name WPECSCodeBuild
+
+# Create and see changes from change set but no deploy
+aws cloudformation deploy --stack-name WPECSCodeBuild --template-file codebuild-stack.yml --capabilities CAPABILITY_NAMED_IAM --no-execute-changeset 
+# Exceute a change set you have created from above command 
+aws cloudformation execute-change-set --change-set-name [ARN]
+# Delete the changeset you have created from deploy command 
+aws cloudformation delete-change-set --change-set-name [ARN]
+
+# Create and deploy change set without seeing the changes 
+aws cloudformation deploy --stack-name WPECSCodeBuild --template-file codebuild-stack.yml --capabilities CAPABILITY_NAMED_IAM 
 ```
 Check in AWS console for events output.
 
