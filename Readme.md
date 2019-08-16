@@ -11,42 +11,6 @@ In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are mul
 
 Rename **codebuild-params-sample.json** to **codebuild-params.json** and fill with the appropriate values.
 
-### For non root CLI user
-You will also need to add IAM policiy for on root CLI user. So create a IAM policy called **CFAPIAccess** and attached it to user or user group.
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "VisualEditor0",
-      "Effect": "Allow",
-      "Action": [
-        "codebuild:DeleteWebhook",
-        "iam:DeletePolicy",
-        "iam:CreateRole",
-        "iam:DeleteRole",
-        "codebuild:ListSourceCredentials",
-        "iam:AttachRolePolicy",
-        "codebuild:UpdateWebhook",
-        "iam:PutRolePolicy",
-        "codebuild:CreateWebhook",
-        "codebuild:UpdateProject",
-        "codebuild:CreateProject",
-        "iam:CreatePolicy",
-        "iam:PassRole",
-        "iam:DeleteRolePolicy",
-        "codebuild:DeleteProject",
-        "codebuild:ListProjects",
-        "codebuild:ListConnectedOAuthAccounts",
-        "iam:PutGroupPolicy"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
-Also assign AWS managed policy **AWSCloudFormationFullAccess** to user group or user.
 
 ### Run commands
 ```bash

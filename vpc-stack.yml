@@ -25,6 +25,9 @@ Parameters:
     Description: CIDR block should be used to create the public subnet in AZ2 (e.g. 172.21.1.192/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.192/26)
+  AvailabilityZoneList:
+    Type: List<AWS::EC2::AvailabilityZone::Name>
+    Description: Availability zone list for the region
   TagPrefix:
     Type: String
     Description: Enter Prefix that should be used for Tags.
@@ -71,7 +74,7 @@ Resources:
     DependsOn: MyVPC
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: 'ap-southeast-2b'
+      AvailabilityZone: !Select [0, !Ref AvailabilityZoneList]
       CidrBlock: !Ref PublicSubnet1CIDR
       MapPublicIpOnLaunch: true
       VpcId: !Ref MyVPC
@@ -82,7 +85,7 @@ Resources:
     DependsOn: MyVPC
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: 'ap-southeast-2a'
+      AvailabilityZone: !Select [1, !Ref AvailabilityZoneList]
       CidrBlock: !Ref PublicSubnet2CIDR
       MapPublicIpOnLaunch: false
       VpcId: !Ref MyVPC
@@ -93,7 +96,7 @@ Resources:
     DependsOn: MyVPC
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: 'ap-southeast-2a'
+      AvailabilityZone: !Select [0, !Ref AvailabilityZoneList]
       CidrBlock: !Ref PrivateSubnet1CIDR
       MapPublicIpOnLaunch: false
       VpcId: !Ref MyVPC
@@ -104,7 +107,7 @@ Resources:
     DependsOn: MyVPC
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: 'ap-southeast-2b'
+      AvailabilityZone: !Select [0, !Ref AvailabilityZoneList]
       CidrBlock: !Ref PrivateSubnet2CIDR
       MapPublicIpOnLaunch: false
       VpcId: !Ref MyVPC
@@ -133,4 +136,20 @@ Outputs:
     Value: !Ref MyVPC
     Export:
       Name: !Sub '${AWS::StackName}-VPCID'
+  PublicSubnets:
+    Description: Subnet ids i
+    Value: !Join 
+        - ','
+        - - !Ref PublicSubnet1
+          - !Ref PublicSubnet2
+    Export:
+      Name: !Sub '${AWS::StackName}-PublicSubnets'
+  PrivateSubnets:
+    Description: Subnet ids i
+    Value: !Join 
+        - ','
+        - - !Ref PrivateSubnet1
+          - !Ref PrivateSubnet2
+    Export:
+      Name: !Sub '${AWS::StackName}-PrivateSubnets'
   

@@ -28,6 +28,10 @@
         "ParameterValue": "10.0.0.192/26"
     },
     {
+        "ParameterKey": "ClusterName",
+        "ParameterValue": "WordPress Cluster"
+    },
+    {
         "ParameterKey": "TagPrefix",
         "ParameterValue": "dev"
     }

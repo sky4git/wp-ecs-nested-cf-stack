@@ -1,0 +1,159 @@
+Description: 'ECS stack for WordPress'
+Parameters:
+  ClusterName:
+    Type: String
+    Description: Name of cluster
+  TagPrefix:
+    Type: String
+    Description: Enter Prefix that should be used for Tags.
+  SecurityGroups:
+    Type: CommaDelimitedList
+    Description: List of securitygroups ids
+  PublicSubnets:
+    Type: CommaDelimitedList
+    Description: List of public subnet ids
+  PrivateSubnets:
+    Type: CommaDelimitedList
+    Description: List of private subnet ids
+Resources:
+  WordPressECSTaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: WordPressECSTaskExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+  ECSTaskExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: ECSTaskExecutionPolicy
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - 
+            Effect: Allow
+            Action:
+              - "ecr:GetAuthorizationToken"
+              - "ecr:BatchCheckLayerAvailability"
+              - "ecr:GetDownloadUrlForLayer"
+            Resource:
+              - "*"
+          - 
+            Effect: Allow
+            Action:
+              - "logs:CreateLogStream"
+              - "logs:PutLogEvents"
+            Resource:
+              - "*"
+        Roles:
+        - !Ref WordPressECSTaskExecutionRole
+  WpCluster:
+    Type: AWS::ECS::Cluster
+    Properties: 
+      ClusterName: !Ref ClusterName
+      Tags: 
+        - Key: Name
+          Value: !Sub ${TagPrefix}-Cluster
+  WpService:
+    Type: AWS::ECS::Service
+    Properties: 
+      ServiceName: WordPressService
+      Cluster: !Ref WpCluster
+      DeploymentConfiguration: 
+        - MaximumPercent: 200
+          MinimumHealthyPercent: 100
+      DesiredCount: 1
+      LaunchType: FARGATE
+      NetworkConfiguration: 
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Select [0, [ !Ref SecurityGroups ] ]
+          Subnets:
+            - !Select [0, [ !Ref PublicSubnets ] ]
+            - !Select [1, [ !Ref PublicSubnets ] ]
+      PlatformVersion: LATEST
+      PropagateTags: SERVICE      
+      SchedulingStrategy: REPLICA
+      Tags: 
+        - Key: Name
+          Value: ECS-Service
+      TaskDefinition: WordPressTask
+  WordPressTask:
+    Type: AWS::ECS::TaskDefinition
+    Properties: 
+      ContainerDefinitions: 
+        - 
+          Name: 'ApacheContainer'
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/apache:latest'
+          Cpu: 512
+          Memory: 1024
+          Essential: True
+          PortMappings: 
+            - ContainerPort: 80
+              HostPort: 80
+            - ContainerPort: 443
+              HostPort: 443
+          MountPoints:
+            - ContainerPath: '/usr/local/apache2/htdocs'
+              SourceVolume: WordPressTaskVolume
+          Ulimits:
+            - HardLimit: 0
+              Name: 'rtprio'
+              SoftLimit: 0
+          LogConfiguration:
+            LogDriver: awslogs
+            Options: 
+              awslogs-group : '/ecs/WordPressService'
+              awslogs-region: 'ap-southeast-2'
+              awslogs-stream-prefix: 'ecs'
+          HealthCheck:
+            Command: 
+              - 'CMD-SHELL, curl -f http://localhost/hello.html || exit 1'
+            Interval: 30
+            Retries: 30
+            StartPeriod: 5
+            Timeout: 300
+        - 
+          Name: 'PhpContainer' 
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/php:latest'
+          Cpu: 512
+          Memory: 1024
+          Essential: True
+          PortMappings: 
+            - ContainerPort: 9000
+          MountPoints:
+            - ContainerPath: '/usr/local/apache2/htdocs'
+              SourceVolume: WordPressTaskVolume
+          Ulimits:
+            - HardLimit: 0
+              Name: 'rtprio'
+              SoftLimit: 0
+          LogConfiguration:
+            LogDriver: awslogs
+            Options: 
+              awslogs-group : '/ecs/WordPressService'
+              awslogs-region: 'ap-southeast-2'
+              awslogs-stream-prefix: 'ecs'
+      Cpu: 1024
+      ExecutionRoleArn: !GetAtt WordPressECSTaskExecutionRole.Arn
+      Family: 'WordPressTasks'
+      Memory: '2048'
+      NetworkMode: 'awsvpc'
+      RequiresCompatibilities: 
+        - FARGATE
+      Tags: 
+        - Key: Name
+          Value: WordPressTask
+      TaskRoleArn: String
+      Volumes: 
+        - Name: WordPressTaskVolume
+          DockerVolumeConfiguration:
+            Scope: Task
+

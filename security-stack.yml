@@ -43,3 +43,11 @@ Resources:
           FromPort: 3306
           ToPort: 3306
           SourceSecurityGroupId: !Ref WebDMZSecurityGroup
+Outputs:
+  SecurityGroups:
+    Value: !Join
+        -  ","
+        - - !Ref WebDMZSecurityGroup
+          - !Ref RDSSecurityGroup
+    Export: 
+      Name: !Sub '${AWS::StackName}-SecurityGroups'
