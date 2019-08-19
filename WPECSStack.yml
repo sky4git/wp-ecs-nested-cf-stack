@@ -75,7 +75,6 @@ Resources:
         VPCID: !GetAtt VPCStack.Outputs.VPCID
         PublicSubnets: !GetAtt VPCStack.Outputs.PublicSubnets
         PrivateSubnets: !GetAtt VPCStack.Outputs.PrivateSubnets
-        SecurityGroups: !GetAtt VPCStack.Outputs.SecurityGroups
       Tags:
         - Key: Name
           Value: SecurityStack
