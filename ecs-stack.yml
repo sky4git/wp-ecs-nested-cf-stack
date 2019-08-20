@@ -55,7 +55,7 @@ Resources:
               - "logs:DeleteLogStream"
               - "logs:PutLogEvents"
             Resource:
-              - "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/ecs/WordPressService:*"
+              - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/ecs/WordPressService:*"
       Roles:
         - !Ref WordPressECSTaskExecutionRole
   WpCluster:

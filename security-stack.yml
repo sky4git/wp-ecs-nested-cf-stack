@@ -36,7 +36,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties: 
       GroupName: RDSSecurityGroup
-      GroupDescription: RDSSecurityGroup
+      GroupDescription: RDS Security Group
       VpcId: !Ref VPCID
       SecurityGroupIngress:
         - IpProtocol: tcp
