@@ -163,11 +163,8 @@ Resources:
             Scope: Task
 Outputs:
   WpCluster:
-    Type: String
     Value: !Ref WpCluster
   WPServiceARN:
-    Type: String
     Value: !Ref WpService
   WordPressTaskARN:
-    Type: String
     Value: !Ref WordPressTask
