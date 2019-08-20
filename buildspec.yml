@@ -5,6 +5,7 @@ environment_variables:
     CHILD_TEMPLATES: |
       vpc-stack.yml
       security-stack.yml
+      ecs-stack.yml
     TEMPLATE_FILES: |
       WPECSStack.yml
     CONFIG_FILES: |
