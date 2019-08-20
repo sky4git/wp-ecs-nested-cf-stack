@@ -65,31 +65,6 @@ Resources:
       Tags: 
         - Key: Name
           Value: !Sub ${TagPrefix}-Cluster
-  WpService:
-    Type: AWS::ECS::Service
-    Properties: 
-      ServiceName: WordPressService
-      Cluster: !Ref WpCluster
-      DeploymentConfiguration: 
-        MaximumPercent: 200
-        MinimumHealthyPercent: 100
-      DesiredCount: 1
-      LaunchType: FARGATE
-      NetworkConfiguration: 
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          SecurityGroups:
-            - !Select [0, !Ref SecurityGroups ]
-          Subnets:
-            - !Select [0, !Ref PublicSubnets ]
-            - !Select [1, !Ref PublicSubnets ]
-      PlatformVersion: LATEST
-      PropagateTags: SERVICE      
-      SchedulingStrategy: REPLICA
-      Tags: 
-        - Key: Name
-          Value: ECS-Service
-      TaskDefinition: ApacheTask
   WordPressTask:
     Type: AWS::ECS::TaskDefinition
     Properties: 
@@ -161,6 +136,31 @@ Resources:
         - Name: WordPressTaskVolume
           DockerVolumeConfiguration:
             Scope: Task
+  WpService:
+    Type: AWS::ECS::Service
+    Properties: 
+      ServiceName: WordPressService
+      Cluster: !Ref WpCluster
+      DeploymentConfiguration: 
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+      DesiredCount: 1
+      LaunchType: FARGATE
+      NetworkConfiguration: 
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Select [0, !Ref SecurityGroups ]
+          Subnets:
+            - !Select [0, !Ref PublicSubnets ]
+            - !Select [1, !Ref PublicSubnets ]
+      PlatformVersion: LATEST
+      PropagateTags: SERVICE      
+      SchedulingStrategy: REPLICA
+      Tags: 
+        - Key: Name
+          Value: ECS-Service
+      TaskDefinition: !Ref WordPressTask
 Outputs:
   WpCluster:
     Value: !Ref WpCluster
