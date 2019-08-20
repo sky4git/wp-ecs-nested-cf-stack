@@ -128,13 +128,7 @@ Resources:
               - "ecs:UpdateServicePrimaryTaskSet"
               - "ecs:UpdateTaskSet"
               - "ecs:PutAttributes"
-            Resource: 
-              - !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:task-set/*/*/*"
-              - !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:service/*"
-              - !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:task-definition/*:*"
-              - !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:task/*"
-              - !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:container-instance/*"
-              - !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:cluster/*"
+            Resource: '*'
           -
             Effect: "Allow"
             Action:
