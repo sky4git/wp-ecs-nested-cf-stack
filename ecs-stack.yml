@@ -44,7 +44,7 @@ Resources:
               - "ecr:GetDownloadUrlForLayer"
               - "ecr:BatchGetImage"
             Resource:
-              - "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/apache"
+              - "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repolsitory/apache"
               - "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/php"
           - 
             Effect: Allow
@@ -56,8 +56,8 @@ Resources:
               - "logs:PutLogEvents"
             Resource:
               - "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/ecs/WordPressService:*"
-        Roles:
-          - !Ref WordPressECSTaskExecutionRole
+      Roles:
+        - !Ref WordPressECSTaskExecutionRole
   WpCluster:
     Type: AWS::ECS::Cluster
     Properties: 
