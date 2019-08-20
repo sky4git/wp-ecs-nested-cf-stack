@@ -34,6 +34,7 @@ Resources:
                 - "s3.amazonaws.com" 
                 - "codebuild.amazonaws.com" 
                 - "cloudformation.amazonaws.com"
+                - "ecs.amazonaws.com"
             Action: 
               - "sts:AssumeRole"
   CodeBuildPolicy:
@@ -43,6 +44,33 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
+          -
+            Effect: "Allow"
+            Action:
+              - "iam:AddRoleToInstanceProfile"
+              - "iam:AttachRolePolicy"
+              - "iam:CreateInstanceProfile"
+              - "iam:CreatePolicy"
+              - "iam:CreateRole"
+              - "iam:DeleteInstanceProfile"
+              - "iam:DeletePolicy"
+              - "iam:DeleteRole"
+              - "iam:DeleteRolePolicy"
+              - "iam:DetachRolePolicy"
+              - "iam:GetInstanceProfile"
+              - "iam:GetPolicy"
+              - "iam:GetRole"
+              - "iam:GetRolePolicy"
+              - "iam:ListAttachedRolePolicies"
+              - "iam:ListInstanceProfiles"
+              - "iam:ListInstanceProfilesForRole"
+              - "iam:ListRolePolicies"
+              - "iam:ListRoles"
+              - "iam:PassRole"
+              - "iam:PutRolePolicy"
+              - "iam:RemoveRoleFromInstanceProfile"
+            Resource: 
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/WordPressECSTaskExecutionRole-*'
           -
             Effect: "Allow"
             Action:
@@ -106,6 +134,7 @@ Resources:
             Effect: "Allow"
             Action:
               - "ecs:CreateCluster"
+              - "ecs:DescribeClusters"
               - "ecs:DeleteCluster"
               - "ecs:CreateService"
               - "ecs:DeleteService"
