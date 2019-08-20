@@ -70,7 +70,7 @@ Resources:
               - "iam:PutRolePolicy"
               - "iam:RemoveRoleFromInstanceProfile"
             Resource: 
-              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/WordPressECSTaskExecutionRole-*'
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/WordPressECSTaskExecutionRole*'
           -
             Effect: "Allow"
             Action:
@@ -137,6 +137,7 @@ Resources:
               - "ecs:DescribeClusters"
               - "ecs:DeleteCluster"
               - "ecs:CreateService"
+              - "ecs:DescribeServices"
               - "ecs:DeleteService"
               - "ecs:CreateTaskSet"
               - "ecs:DeleteTaskSet"
@@ -144,8 +145,10 @@ Resources:
               - "ecs:RegisterContainerInstance"
               - "ecs:DeregisterContainerInstance"
               - "ecs:RegisterTaskDefinition"
+              - "ecs:DescribeTaskDefinition"
               - "ecs:DeregisterTaskDefinition"
               - "ecs:RunTask"
+              - "ecs:DescribeTasks"
               - "ecs:StopTask"
               - "ecs:StartTask"
               - "ecs:StopTask"

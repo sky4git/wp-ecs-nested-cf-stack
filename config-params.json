@@ -29,7 +29,7 @@
     },
     {
         "ParameterKey": "ClusterName",
-        "ParameterValue": "WordPress Cluster"
+        "ParameterValue": "WPCluster"
     },
     {
         "ParameterKey": "TagPrefix",
