@@ -188,16 +188,7 @@ Resources:
               - "ec2:TerminateInstances"
               - "ec2:UnmonitorInstances"
               - "ec2:AuthorizeSecurityGroupIngress"
-            Resource: 
-              - !Sub 'arn:aws:ec2:${AWS::Region}::image/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::vpc/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::instance/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::internet-gateway/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::key-pair/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::network-interface/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::security-group/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::subnet/*'
-              - !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}::volume/*'
+            Resource: '*'
       Roles:
         - !Ref IAMCodeBuildRole
   S3Bucket:

@@ -73,8 +73,6 @@ Resources:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/security-stack.yml"
       Parameters:
         VPCID: !GetAtt VPCStack.Outputs.VPCID
-        PublicSubnets: !GetAtt VPCStack.Outputs.PublicSubnets
-        PrivateSubnets: !GetAtt VPCStack.Outputs.PrivateSubnets
       Tags:
         - Key: Name
           Value: SecurityStack

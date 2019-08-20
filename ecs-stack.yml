@@ -42,15 +42,20 @@ Resources:
               - "ecr:GetAuthorizationToken"
               - "ecr:BatchCheckLayerAvailability"
               - "ecr:GetDownloadUrlForLayer"
+              - "ecr:BatchGetImage"
             Resource:
-              - "*"
+              - "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/apache"
+              - "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/php"
           - 
             Effect: Allow
             Action:
+              - "logs:CreateLogGroup"
+              - "logs:DeleteLogGroup"
               - "logs:CreateLogStream"
+              - "logs:DeleteLogStream"
               - "logs:PutLogEvents"
             Resource:
-              - "*"
+              - "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/ecs/WordPressService:*"
         Roles:
         - !Ref WordPressECSTaskExecutionRole
   WpCluster:
@@ -84,7 +89,7 @@ Resources:
       Tags: 
         - Key: Name
           Value: ECS-Service
-      TaskDefinition: WordPressTask
+      TaskDefinition: ApacheTask
   WordPressTask:
     Type: AWS::ECS::TaskDefinition
     Properties: 
@@ -142,18 +147,17 @@ Resources:
               awslogs-region: 'ap-southeast-2'
               awslogs-stream-prefix: 'ecs'
       Cpu: 1024
+      TaskRoleArn: !GetAtt WordPressECSTaskExecutionRole.Arn
       ExecutionRoleArn: !GetAtt WordPressECSTaskExecutionRole.Arn
       Family: 'WordPressTasks'
-      Memory: '2048'
+      Memory: 2048
       NetworkMode: 'awsvpc'
       RequiresCompatibilities: 
         - FARGATE
       Tags: 
         - Key: Name
           Value: WordPressTask
-      TaskRoleArn: String
       Volumes: 
         - Name: WordPressTaskVolume
           DockerVolumeConfiguration:
             Scope: Task
-
