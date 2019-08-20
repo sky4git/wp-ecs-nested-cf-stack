@@ -96,10 +96,10 @@ Resources:
           HealthCheck:
             Command: 
               - 'CMD-SHELL, curl -f http://localhost/hello.html || exit 1'
-            Interval: 30
-            Retries: 30
-            StartPeriod: 5
-            Timeout: 300
+            Interval: 300
+            Retries: 3
+            StartPeriod: 300
+            Timeout: 30
         - 
           Name: 'PhpContainer' 
           Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/php:latest'
