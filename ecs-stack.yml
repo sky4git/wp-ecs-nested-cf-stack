@@ -79,10 +79,10 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
           SecurityGroups:
-            - !Select [0, [ !Ref SecurityGroups ] ]
+            - !Select [0, !Ref SecurityGroups ]
           Subnets:
-            - !Select [0, [ !Ref PublicSubnets ] ]
-            - !Select [1, [ !Ref PublicSubnets ] ]
+            - !Select [0, !Ref PublicSubnets ]
+            - !Select [1, !Ref PublicSubnets ]
       PlatformVersion: LATEST
       PropagateTags: SERVICE      
       SchedulingStrategy: REPLICA
