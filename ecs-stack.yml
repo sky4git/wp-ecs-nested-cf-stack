@@ -31,6 +31,7 @@ Resources:
       Path: /
   ECSTaskExecutionPolicy:
     Type: AWS::IAM::Policy
+    DependsOn: WordPressECSTaskExecutionRole
     Properties:
       PolicyName: ECSTaskExecutionPolicy
       PolicyDocument:
@@ -67,6 +68,9 @@ Resources:
           Value: !Sub ${TagPrefix}-Cluster
   WordPressTask:
     Type: AWS::ECS::TaskDefinition
+    DependsOn: 
+      - ECSTaskExecutionPolicy
+      - WordPressECSTaskExecutionRole
     Properties: 
       ContainerDefinitions: 
         - 
@@ -138,6 +142,7 @@ Resources:
             Scope: task
   WpService:
     Type: AWS::ECS::Service
+    DependsOn: WordPressTask
     Properties: 
       ServiceName: WordPressService
       Cluster: !Ref WpCluster
