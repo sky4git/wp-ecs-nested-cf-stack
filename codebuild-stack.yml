@@ -131,6 +131,7 @@ Resources:
               - "logs:CreateLogStream"
               - "logs:DeleteLogStream"
               - "logs:PutLogEvents"
+              - "logs:DescribeLogGroups"
             Resource:
               - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group*" 
           -
