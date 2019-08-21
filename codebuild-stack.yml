@@ -128,8 +128,11 @@ Resources:
             Action:
               - "logs:CreateLogGroup"
               - "logs:DeleteLogGroup"
+              - "logs:CreateLogStream"
+              - "logs:DeleteLogStream"
+              - "logs:PutLogEvents"
             Resource:
-              - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/*" 
+              - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group*" 
           -
             Effect: "Allow"
             Action:
