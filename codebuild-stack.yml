@@ -132,6 +132,9 @@ Resources:
               - "logs:DeleteLogStream"
               - "logs:PutLogEvents"
               - "logs:DescribeLogGroups"
+              - "logs:DescribeLogStreams"
+              - "logs:PutRetentionPolicy"
+              - "logs:DeleteRetentionPolicy"
             Resource:
               - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group*" 
           -
