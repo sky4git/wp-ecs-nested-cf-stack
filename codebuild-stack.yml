@@ -123,13 +123,13 @@ Resources:
               - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-dev/*'
               - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-test/*'
               - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/WPECSStack-prod/*'
-          -
+          - 
             Effect: "Allow"
             Action:
               - "logs:CreateLogGroup"
-              - "logs:CreateLogStream"
-              - "logs:PutLogEvents"
-            Resource: "*" 
+              - "logs:DeleteLogGroup"
+            Resource:
+              - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/*" 
           -
             Effect: "Allow"
             Action:

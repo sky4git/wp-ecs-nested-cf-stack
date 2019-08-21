@@ -64,11 +64,17 @@ Resources:
       Tags: 
         - Key: Name
           Value: !Sub ${TagPrefix}-Cluster
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: '/ecs/WordPressService'
+      RetentionInDays: 7
   WordPressTask:
     Type: AWS::ECS::TaskDefinition
     DependsOn: 
       - ECSTaskExecutionPolicy
       - WordPressECSTaskExecutionRole
+      - LogGroup
     Properties: 
       ContainerDefinitions: 
         - 
@@ -92,7 +98,7 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options: 
-              awslogs-group : '/ecs/WordPressService'
+              awslogs-group : !Ref LogGroup
               awslogs-region: 'ap-southeast-2'
               awslogs-stream-prefix: 'ecs'
           HealthCheck:
@@ -120,7 +126,7 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options: 
-              awslogs-group : '/ecs/WordPressService'
+              awslogs-group : !Ref LogGroup
               awslogs-region: 'ap-southeast-2'
               awslogs-stream-prefix: 'ecs'
       Cpu: 1024
