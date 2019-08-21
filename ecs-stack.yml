@@ -44,9 +44,7 @@ Resources:
               - "ecr:BatchCheckLayerAvailability"
               - "ecr:GetDownloadUrlForLayer"
               - "ecr:BatchGetImage"
-            Resource:
-              - !Sub "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/apache"
-              - !Sub "arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/php"
+            Resource: '*'
           - 
             Effect: Allow
             Action:
