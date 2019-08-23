@@ -6,6 +6,7 @@ environment_variables:
       vpc-stack.yml
       security-stack.yml
       ecs-stack.yml
+      rds-stack.yml
     TEMPLATE_FILES: |
       WPECSStack.yml
     CONFIG_FILES: |

@@ -222,6 +222,40 @@ Resources:
               - "ec2:UnmonitorInstances"
               - "ec2:AuthorizeSecurityGroupIngress"
             Resource: '*'
+          -
+            Effect: "Allow"
+            Action:
+              - "rds:CreateDBCluster"
+              - "rds:DeleteDBCluster"
+              - "rds:CreateDBClusterParameterGroup"
+              - "rds:DeleteDBClusterParameterGroup"
+              - "rds:CreateDBInstance"
+              - "rds:DeleteDBInstance"
+              - "rds:CreateDBInstanceReadReplica"
+              - "rds:DeleteDBInstanceReadReplica"
+              - "rds:CreateDBSnapshot"
+              - "rds:DeleteDBSnapshot"
+              - "rds:CreateDBSubnetGroup"
+              - "rds:DeleteDBSubnetGroup"
+              - "rds:CreateOptionGroup"
+              - "rds:DeleteOptionGroup"
+              - "rds:CreateDBSecurityGroup"
+              - "rds:DeleteDBSecurityGroup"
+              - "rds:DescribeDBClusters"
+              - "rds:DescribeDBEngineVersions"
+              - "rds:DescribeDBInstances"
+              - "rds:DescribeDBParameterGroups"
+              - "rds:DescribeOptionGroups"
+              - "rds:ModifyDBCluster"
+              - "rds:ModifyDBClusterParameterGroup"
+              - "rds:ModifyDBClusterSnapshotAttribute"
+              - "rds:ModifyDBInstance"
+              - "rds:ModifyDBParameterGroup"
+              - "rds:ModifyDBSnapshotAttribute"
+              - "rds:ModifyDBSubnetGroup"
+              - "rds:ModifyOptionGroup"
+            Resource: 
+              - !Sub "arn:aws:rds:${AWS::Region}:${AWS::AccountId}:*"
       Roles:
         - !Ref IAMCodeBuildRole
   S3Bucket:

@@ -28,6 +28,11 @@ Parameters:
     Description: CIDR block should be used to create the public subnet in AZ2 (e.g. 172.21.1.64/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.64/26)
+  PublicSubnet3CIDR:
+    Type: String
+    Description: CIDR block should be used to create the public subnet in AZ3 (e.g. 172.21.1.64/26)
+    AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
+    ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.64/26)
   PrivateSubnet1CIDR:
     Type: String
     Description: CIDR block should be used to create the public subnet in AZ1 (e.g. 172.21.1.128/26)
@@ -38,12 +43,61 @@ Parameters:
     Description: CIDR block should be used to create the public subnet in AZ2 (e.g. 172.21.1.192/26)
     AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.192/26)
+  PrivateSubnet3CIDR:
+    Type: String
+    Description: CIDR block should be used to create the public subnet in AZ3 (e.g. 172.21.1.192/26)
+    AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{2})"
+    ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x. (e.g. 172.21.1.192/26)
   ClusterName:
     Type: String
     Description: Name of cluster  
   TagPrefix:
     Type: String
     Description: Enter Prefix that should be used for Tags.
+  MasterUsername: 
+    Default: 'wordpress'
+    Type: String
+    Description: Specify database root username
+  MasterUserPassword: 
+    Default: 'somethingstrong'
+    Type: String
+    Description: Specify database password
+  DBName:
+    Default: 'WordPressDB'
+    Type: String
+    Description: Database name
+  RDSDBEngine: 
+      Type: String
+      Description: Database Engine Version
+      Default: aurora
+      AllowedValues:
+        - aurora
+        - aurora-mysql
+        - aurora-postgresql
+  RDSInstaceType:
+      Type: String
+      Description: Database instace type
+      Default: db.r5.large
+      AllowedValues:
+        - db.t2.small
+        - db.t2.medium
+        - db.t3.small
+        - db.t3.medium
+        - db.r3.large
+        - db.r3.xlarge
+        - db.r3.2xlarge
+        - db.r3.4xlarge
+        - db.r3.8xlarge
+        - db.r4.large
+        - db.r4.xlarge
+        - db.r4.2xlarge
+        - db.r4,4xlarge
+        - db.r4.8xlarge
+        - db.r4.16xlarge
+        - db.r5.large
+        - db.r5.2xlarge
+        - db.r5.4xlarge
+        - db.r5.12xlarge
 Resources:
   VPCStack:
     Type: "AWS::CloudFormation::Stack"
@@ -54,8 +108,10 @@ Resources:
         VPCCIDR: !Ref VPCCIDR
         PublicSubnet1CIDR: !Ref PublicSubnet1CIDR
         PublicSubnet2CIDR: !Ref PublicSubnet2CIDR
+        PublicSubnet3CIDR: !Ref PublicSubnet2CIDR
         PrivateSubnet1CIDR: !Ref PrivateSubnet1CIDR
         PrivateSubnet2CIDR: !Ref PrivateSubnet2CIDR
+        PrivateSubnet3CIDR: !Ref PrivateSubnet2CIDR
         TagPrefix: !Ref TagPrefix
       Tags:
         - Key: Name
@@ -90,7 +146,6 @@ Resources:
       Parameters:
         ClusterName: !Ref ClusterName
         PublicSubnets: !GetAtt VPCStack.Outputs.PublicSubnets
-        PrivateSubnets: !GetAtt VPCStack.Outputs.PrivateSubnets
         SecurityGroups: !GetAtt SecurityStack.Outputs.SecurityGroups
         TagPrefix: !Ref TagPrefix
       Tags:
@@ -100,5 +155,25 @@ Resources:
           Value: WPECSStack
         - Key: Environment
           Value: !Ref Environment
-
-      
+  RDSStack:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: 
+      - SecurityStack
+    Properties:
+      TemplateURL:
+        Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/rds-stack.yml"
+      Parameters:
+        PrivateSubnets: !GetAtt VPCStack.Outputs.PrivateSubnets
+        SecurityGroups: !GetAtt SecurityStack.Outputs.SecurityGroups
+        MasterUsername: !Ref MasterUsername
+        MasterUserPassword: !Ref MasterUserPassword
+        DBName: !Ref DBName
+        RDSDBEngine: !Ref RDSDBEngine 
+        RDSInstaceType: !Ref RDSInstaceType
+      Tags:
+        - Key: Name
+          Value: ECSStack
+        - Key: Parent
+          Value: WPECSStack
+        - Key: Environment
+          Value: !Ref Environment

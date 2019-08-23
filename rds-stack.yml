@@ -1,0 +1,116 @@
+Description: 'Database stack for Wordpress'
+Parameters:
+  SecurityGroups:
+    Type: CommaDelimitedList
+    Description: List of securitygroups ids
+  PrivateSubnets:
+    Type: CommaDelimitedList
+    Description: List of private subnet ids
+  MasterUsername: 
+    Default: 'wordpress'
+    Type: String
+    Description: Specify database root username
+  MasterUserPassword: 
+    Default: 'somethingstrong'
+    Type: String
+    Description: Specify database password
+  DBName:
+    Default: 'WordPressDB'
+    Type: String
+    Description: Database name
+  RDSDBEngine: 
+      Type: String
+      Description: Database Engine Version
+      Default: aurora
+      AllowedValues:
+        - aurora
+        - aurora-mysql
+        - aurora-postgresql
+  RDSInstaceType:
+      Type: String
+      Description: Database instace type
+      Default: db.r5.large
+      AllowedValues:
+        - db.t2.small
+        - db.t2.medium
+        - db.t3.small
+        - db.t3.medium
+        - db.r3.large
+        - db.r3.xlarge
+        - db.r3.2xlarge
+        - db.r3.4xlarge
+        - db.r3.8xlarge
+        - db.r4.large
+        - db.r4.xlarge
+        - db.r4.2xlarge
+        - db.r4,4xlarge
+        - db.r4.8xlarge
+        - db.r4.16xlarge
+        - db.r5.large
+        - db.r5.2xlarge
+        - db.r5.4xlarge
+        - db.r5.12xlarge
+Resources:
+  RDSSubnetGroup:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties: 
+        DBSubnetGroupDescription: RDS Subnet group
+        SubnetIds:
+          - !Select [0, !Ref PrivateSubnets ]
+          - !Select [1, !Ref PrivateSubnets ]
+          - !Select [2, !Ref PrivateSubnets ]
+        Tags:
+          - Key: Name
+            Value: RDSSubnetGroup
+  AuroraCluster:
+    Type: 'AWS::RDS::DBCluster'
+    DependsOn: 
+      - RDSSubnetGroup
+    Properties:
+      AvailabilityZones:
+        - !Select [0, !GetAZs ]
+        - !Select [1, !GetAZs ]
+        - !Select [2, !GetAZs ]
+      BackupRetentionPeriod: '1'
+      DatabaseName: !Ref DBName
+      DBSubnetGroupName: !Ref RDSSubnetGroup
+      Engine: !Ref RDSDBEngine
+      MasterUsername:  !Ref MasterUsername
+      MasterUserPassword: !Ref MasterUserPassword
+      EngineMode: 'provisioned'
+      StorageEncrypted: true
+      Tags:
+        - Key: Name
+          Value: EcsRdsStack
+      VpcSecurityGroupIds:
+        - !Select [1, !Ref SecurityGroups ]
+  RDSAurora:
+      Type: AWS::RDS::DBInstance
+      Properties: 
+        AvailabilityZone: !Select [0, !GetAZs ]
+        Engine: !Ref RDSDBEngine
+        DBInstanceClass: !Ref RDSInstaceType
+        PubliclyAccessible: 'false'
+        AllowMajorVersionUpgrade: False
+        AutoMinorVersionUpgrade: true 
+        DBClusterIdentifier: !Ref AuroraCluster
+  RDSAuroraReplica:
+      Type: AWS::RDS::DBInstance
+      Properties: 
+        AvailabilityZone: !Select [1, !GetAZs ]
+        SourceDBInstanceIdentifier: !Ref RDSAurora
+        Tags:
+          - Key: Name
+            Value: RDSReplica
+Outputs:
+  ClusterName:
+    Description: RDS Aurora Cluster Name
+    Value: !Ref AuroraCluster
+  RDSClusterEndpoint:
+    Description: Database endpoint
+    Value: !GetAtt AuroraCluster.Endpoint.Address 
+    Export:
+      Name: !Sub '${AWS::StackName}-RDSEndpoint'
+  RDSSubnetGroup:
+    Description: DB subnet group
+    Value: !Ref RDSSubnetGroup

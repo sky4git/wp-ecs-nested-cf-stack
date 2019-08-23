@@ -12,9 +12,6 @@ Parameters:
   PublicSubnets:
     Type: CommaDelimitedList
     Description: List of public subnet ids
-  PrivateSubnets:
-    Type: CommaDelimitedList
-    Description: List of private subnet ids
 Resources:
   WordPressECSTaskExecutionRole:
     Type: AWS::IAM::Role
@@ -163,6 +160,7 @@ Resources:
           Subnets:
             - !Select [0, !Ref PublicSubnets ]
             - !Select [1, !Ref PublicSubnets ]
+            - !Select [2, !Ref PublicSubnets ]
       PlatformVersion: LATEST
       PropagateTags: SERVICE      
       SchedulingStrategy: REPLICA
