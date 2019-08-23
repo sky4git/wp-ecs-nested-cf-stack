@@ -73,7 +73,7 @@ phases:
         #     echo 'Starting to delete existing stacks'
         #     aws cloudformation delete-stack --stack-name WPECSStack-$TEMPLATE_PREFIX
         #     aws cloudformation wait stack-delete-complete --stack-name WPECSStack-$TEMPLATE_PREFIX
-        #     echo "Start Creating stacks"
+        #     echo "Start Creating stacks"]
         #     cfn-create-or-update --stack-name WPECSStack-$TEMPLATE_PREFIX --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
         # fi    
       #- (aws cloudformation deploy \
