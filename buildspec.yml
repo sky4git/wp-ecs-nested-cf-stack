@@ -67,16 +67,15 @@ phases:
       #- aws cloudformation stack-exists --stack-name WPECSStack
       - echo "Start Creating stacks"
       - aws cloudformation validate-template --template-body file://WPECSStack.yml  
-      - | 
-        if [ cfn-create-or-update --stack-name WPECSStack-$TEMPLATE_PREFIX --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND ]
-            echo 'WPECSStack-$TEMPLATE_PREFIX Stack created successfully'
-        else
-            echo 'Starting to delete existing stacks'
-            aws cloudformation delete-stack --stack-name WPECSStack-$TEMPLATE_PREFIX
-            aws cloudformation wait stack-delete-complete --stack-name WPECSStack-$TEMPLATE_PREFIX
-            echo "Start Creating stacks"
-            cfn-create-or-update --stack-name WPECSStack-$TEMPLATE_PREFIX --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
-        fi    
+      - cfn-create-or-update --stack-name WPECSStack-$TEMPLATE_PREFIX --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND 
+        #     echo 'WPECSStack-$TEMPLATE_PREFIX Stack created successfully'
+        # else
+        #     echo 'Starting to delete existing stacks'
+        #     aws cloudformation delete-stack --stack-name WPECSStack-$TEMPLATE_PREFIX
+        #     aws cloudformation wait stack-delete-complete --stack-name WPECSStack-$TEMPLATE_PREFIX
+        #     echo "Start Creating stacks"
+        #     cfn-create-or-update --stack-name WPECSStack-$TEMPLATE_PREFIX --template-body file://WPECSStack.yml --parameters file://config-params.json --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+        # fi    
       #- (aws cloudformation deploy \
         #   --template-file WPECSStack.yml \
         #   --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
