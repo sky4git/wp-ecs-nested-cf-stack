@@ -112,9 +112,9 @@ Resources:
         Tags:
           - Key: Name
             Value: RDSReplica
-            
+
 Conditions:
-  CreateReplica: !Not [!Ref RDSEngineMode, serverless]
+  CreateReplica: !Not [!Equals [!Ref RDSEngineMode, serverless] ]
 
 Outputs:
   ClusterName:
