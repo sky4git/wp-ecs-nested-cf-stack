@@ -237,6 +237,7 @@ Resources:
               - "rds:DeleteDBSnapshot"
               - "rds:CreateDBSubnetGroup"
               - "rds:DeleteDBSubnetGroup"
+              - "rds:DescribeDBSubnetGroups"
               - "rds:CreateOptionGroup"
               - "rds:DeleteOptionGroup"
               - "rds:CreateDBSecurityGroup"
