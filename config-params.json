@@ -60,6 +60,10 @@
         "ParameterValue": "aurora"
     },
     {
+        "ParameterKey": "RDSEngineMode",
+        "ParameterValue": "serverless"
+    },
+    {
         "ParameterKey": "RDSInstaceType",
         "ParameterValue": "db.t2.small"
     }

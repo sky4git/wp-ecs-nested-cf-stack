@@ -74,6 +74,15 @@ Parameters:
         - aurora
         - aurora-mysql
         - aurora-postgresql
+  RDSEngineMode:
+    Type: String
+    Description: Database Engine mode
+    Default: serverless
+    AllowedValues:
+      - serverless
+      - provisioned
+      - parallelquery
+      - global
   RDSInstaceType:
       Type: String
       Description: Database instace type
@@ -169,6 +178,7 @@ Resources:
         MasterUserPassword: !Ref MasterUserPassword
         DBName: !Ref DBName
         RDSDBEngine: !Ref RDSDBEngine 
+        RDSEngineMode: !Ref RDSEngineMode
         RDSInstaceType: !Ref RDSInstaceType
       Tags:
         - Key: Name

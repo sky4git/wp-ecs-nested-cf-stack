@@ -19,13 +19,22 @@ Parameters:
     Type: String
     Description: Database name
   RDSDBEngine: 
-      Type: String
-      Description: Database Engine Version
-      Default: aurora
-      AllowedValues:
-        - aurora
-        - aurora-mysql
-        - aurora-postgresql
+    Type: String
+    Description: Database Engine Version
+    Default: aurora
+    AllowedValues:
+      - aurora
+      - aurora-mysql
+      - aurora-postgresql
+  RDSEngineMode:
+    Type: String
+    Description: Database Engine mode
+    Default: serverless
+    AllowedValues:
+      - serverless
+      - provisioned
+      - parallelquery
+      - global
   RDSInstaceType:
       Type: String
       Description: Database instace type
@@ -96,12 +105,17 @@ Resources:
         DBClusterIdentifier: !Ref AuroraCluster
   RDSAuroraReplica:
       Type: AWS::RDS::DBInstance
+      Condition: CreateReplica
       Properties: 
-        AvailabilityZone: !Select [1, !GetAZs ]
+        AvailabilityZone: !Select [2, !GetAZs ]
         SourceDBInstanceIdentifier: !Ref RDSAurora
         Tags:
           - Key: Name
             Value: RDSReplica
+            
+Conditions:
+  CreateReplica: !Not [!Ref RDSEngineMode, serverless]
+
 Outputs:
   ClusterName:
     Description: RDS Aurora Cluster Name
