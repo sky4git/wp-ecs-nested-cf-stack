@@ -150,7 +150,7 @@ Resources:
     DependsOn: MyVPC
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [1, !GetAZs ]
+      AvailabilityZone: !Select [2, !GetAZs ]
       CidrBlock: !Ref PrivateSubnet3CIDR
       MapPublicIpOnLaunch: false
       VpcId: !Ref MyVPC
