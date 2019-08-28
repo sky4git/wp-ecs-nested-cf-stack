@@ -9,31 +9,31 @@
     },
     {
         "ParameterKey": "VPCCIDR",
-        "ParameterValue": "10.0.0.0/24"
+        "ParameterValue": "10.0.0.0/16"
     },
     {
         "ParameterKey": "PublicSubnet1CIDR",
-        "ParameterValue": "10.0.0.0/28"
+        "ParameterValue": "10.0.1.0/24"
     },
     {
         "ParameterKey": "PublicSubnet2CIDR",
-        "ParameterValue": "10.0.0.30/28"
+        "ParameterValue": "10.0.2.0/24"
     },
     {
         "ParameterKey": "PublicSubnet3CIDR",
-        "ParameterValue": "10.0.0.38/28"
+        "ParameterValue": "10.0.3.0/24"
     },
     {
         "ParameterKey": "PrivateSubnet1CIDR",
-        "ParameterValue": "10.0.0.54/28"
+        "ParameterValue": "10.0.101.0/24"
     },
     {
         "ParameterKey": "PrivateSubnet2CIDR",
-        "ParameterValue": "10.0.0.68/28"
+        "ParameterValue": "10.0.102.0/24"
     },
     {
         "ParameterKey": "PrivateSubnet3CIDR",
-        "ParameterValue": "10.0.0.84/28"
+        "ParameterValue": "10.0.103.0/24"
     },
     {
         "ParameterKey": "ClusterName",
