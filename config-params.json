@@ -17,11 +17,11 @@
     },
     {
         "ParameterKey": "PublicSubnet2CIDR",
-        "ParameterValue": "10.0.2.0/20"
+        "ParameterValue": "10.0.17.0/20"
     },
     {
         "ParameterKey": "PublicSubnet3CIDR",
-        "ParameterValue": "10.0.3.0/20"
+        "ParameterValue": "10.0.34.0/20"
     },
     {
         "ParameterKey": "PrivateSubnet1CIDR",
@@ -29,11 +29,11 @@
     },
     {
         "ParameterKey": "PrivateSubnet2CIDR",
-        "ParameterValue": "10.0.102.0/20"
+        "ParameterValue": "10.0.117.0/20"
     },
     {
         "ParameterKey": "PrivateSubnet3CIDR",
-        "ParameterValue": "10.0.103.0/20"
+        "ParameterValue": "10.0.134.0/20"
     },
     {
         "ParameterKey": "ClusterName",
