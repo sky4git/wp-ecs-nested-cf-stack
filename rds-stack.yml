@@ -86,7 +86,7 @@ Resources:
       Engine: !Ref RDSDBEngine
       MasterUsername:  !Ref MasterUsername
       MasterUserPassword: !Ref MasterUserPassword
-      EngineMode: 'provisioned'
+      EngineMode: !Ref RDSEngineMode
       StorageEncrypted: true
       Tags:
         - Key: Name
