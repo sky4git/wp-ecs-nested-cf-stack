@@ -172,6 +172,7 @@ Resources:
       TemplateURL:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/rds-stack.yml"
       Parameters:
+        Environment: !Ref Environment
         PrivateSubnets: !GetAtt VPCStack.Outputs.PrivateSubnets
         SecurityGroups: !GetAtt SecurityStack.Outputs.SecurityGroups
         MasterUsername: !Ref MasterUsername

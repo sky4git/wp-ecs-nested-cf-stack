@@ -1,5 +1,13 @@
 Description: 'Database stack for Wordpress'
 Parameters:
+  Environment:  
+    Type: String
+    Description: Select the appropriate environment
+    AllowedValues:
+      - dev
+      - test
+      - uat
+      - prod
   SecurityGroups:
     Type: CommaDelimitedList
     Description: List of securitygroups ids
@@ -88,6 +96,10 @@ Resources:
       MasterUserPassword: !Ref MasterUserPassword
       EngineMode: !Ref RDSEngineMode
       StorageEncrypted: true
+      ScalingConfiguration:
+        AutoPause: !If [UseProdCondition, False, True]
+        MaxCapacity: 256
+        MinCapacity: 1
       Tags:
         - Key: Name
           Value: EcsRdsStack
@@ -95,6 +107,7 @@ Resources:
         - !Select [1, !Ref SecurityGroups ]
   RDSAurora:
       Type: AWS::RDS::DBInstance
+      Condition: CreateReplica
       Properties: 
         AvailabilityZone: !Select [0, !GetAZs ]
         Engine: !Ref RDSDBEngine
@@ -115,6 +128,7 @@ Resources:
 
 Conditions:
   CreateReplica: !Not [!Equals [!Ref RDSEngineMode, serverless] ]
+  UseProdCondition: !Equals [!Ref Environment, prod] 
 
 Outputs:
   ClusterName:
