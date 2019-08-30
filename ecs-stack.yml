@@ -141,7 +141,7 @@ Resources:
         - Name: WordPressTaskVolume
           DockerVolumeConfiguration:
             Scope: shared
-            autoprovision: true
+            Autoprovision: true
   WpService:
     Type: AWS::ECS::Service
     DependsOn: WordPressTask
