@@ -107,18 +107,18 @@ Resources:
         - !Select [1, !Ref SecurityGroups ]
   RDSAurora:
       Type: AWS::RDS::DBInstance
-      Condition: CreateReplica
+      Condition: NotServerLess
       Properties: 
         AvailabilityZone: !Select [0, !GetAZs ]
         Engine: !Ref RDSDBEngine
         DBInstanceClass: !Ref RDSInstaceType
-        PubliclyAccessible: 'false'
+        PubliclyAccessible: False
         AllowMajorVersionUpgrade: False
-        AutoMinorVersionUpgrade: true 
+        AutoMinorVersionUpgrade: True 
         DBClusterIdentifier: !Ref AuroraCluster
   RDSAuroraReplica:
       Type: AWS::RDS::DBInstance
-      Condition: CreateReplica
+      Condition: NotServerLess
       Properties: 
         AvailabilityZone: !Select [2, !GetAZs ]
         SourceDBInstanceIdentifier: !Ref RDSAurora
@@ -127,7 +127,7 @@ Resources:
             Value: RDSReplica
 
 Conditions:
-  CreateReplica: !Not [!Equals [!Ref RDSEngineMode, serverless] ]
+  NotServerLess: !Equals [!Ref RDSEngineMode, serverless] ]
   UseProdCondition: !Equals [!Ref Environment, prod] 
 
 Outputs:
