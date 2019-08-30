@@ -139,11 +139,6 @@ Outputs:
     Value: !GetAtt AuroraCluster.Endpoint.Address 
     Export:
       Name: !Sub '${AWS::StackName}-RDSClusterEndpoint'
-  RDSDBEndpoint:
-    Description: Database instance endpoint
-    Value: !GetAtt RDSAurora.Endpoint.Address 
-    Export:
-      Name: !Sub '${AWS::StackName}-RDSDBEndpoint'
   RDSSubnetGroup:
     Description: DB subnet group
     Value: !Ref RDSSubnetGroup
