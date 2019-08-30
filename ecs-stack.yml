@@ -140,7 +140,7 @@ Resources:
       Volumes: 
         - Name: WordPressTaskVolume
           DockerVolumeConfiguration:
-            Scope: shared
+            Scope: task
   WpService:
     Type: AWS::ECS::Service
     DependsOn: WordPressTask
