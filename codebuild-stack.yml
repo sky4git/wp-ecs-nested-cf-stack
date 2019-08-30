@@ -137,6 +137,20 @@ Resources:
               - "logs:DeleteRetentionPolicy"
             Resource:
               - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group*" 
+          - 
+            Effect: "Allow"
+            Action:
+              - "servicediscovery:CreateService"
+              - "servicediscovery:DeleteService"
+              - "servicediscovery:UpdateService"
+              - "servicediscovery:CreatePublicDnsNamespace"
+              - "servicediscovery:CreateHttpNamespace"
+              - "servicediscovery:CreatePrivateDnsNamespace"
+              - "servicediscovery:DeleteNamespace"
+              - "servicediscovery:DeregisterInstance"
+              - "servicediscovery:RegisterInstance"
+              - "servicediscovery:UpdateInstanceCustomHealthStatus"
+            Resource: '*'
           -
             Effect: "Allow"
             Action:

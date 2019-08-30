@@ -34,7 +34,13 @@ Check in AWS console for events output.
 
 Copy S3BucketName from the outputs.
 
-## Step 2:
+## step 2
+
+### Create Apache and Php docker images
+Create Apache and PHP Docker/ECR images from the following GitHub repo. 
+**[https://github.com/sky4git/docker](https://github.com/sky4git/docker)**
+
+## Step 3:
 
 ### Create base WPECSStack Stack
 In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are multiple YAML (*CloudFormation Templates*) & JSON (*CloudFormation Configuration*) files.
