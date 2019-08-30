@@ -107,7 +107,7 @@ Resources:
         - !Select [1, !Ref SecurityGroups ]
   RDSAurora:
       Type: AWS::RDS::DBInstance
-      Condition: !Not IsServerLess
+      Condition: IsNotServerLess
       Properties: 
         AvailabilityZone: !Select [0, !GetAZs ]
         Engine: !Ref RDSDBEngine
@@ -118,7 +118,7 @@ Resources:
         DBClusterIdentifier: !Ref AuroraCluster
   RDSAuroraReplica:
       Type: AWS::RDS::DBInstance
-      Condition: !Not IsServerLess
+      Condition: IsNotServerLess
       Properties: 
         AvailabilityZone: !Select [2, !GetAZs ]
         SourceDBInstanceIdentifier: !Ref RDSAurora
@@ -127,7 +127,7 @@ Resources:
             Value: RDSReplica
 
 Conditions:
-  IsServerLess: !Equals [!Ref RDSEngineMode, serverless] 
+  IsNotServerLess: !Not [ !Equals [!Ref RDSEngineMode, serverless] ]
   UseProdCondition: !Equals [!Ref Environment, prod] 
 
 Outputs:
