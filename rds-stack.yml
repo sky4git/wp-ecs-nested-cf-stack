@@ -127,7 +127,7 @@ Resources:
             Value: RDSReplica
 
 Conditions:
-  NotServerLess: !Equals [!Ref RDSEngineMode, serverless] ]
+  NotServerLess: !Equals [!Ref RDSEngineMode, serverless] 
   UseProdCondition: !Equals [!Ref Environment, prod] 
 
 Outputs:
