@@ -169,9 +169,6 @@ Resources:
         - Key: Name
           Value: ECS-Service
       TaskDefinition: !Ref WordPressTask
-      ServiceRegistries:
-        - ContainerName: ApacheContainer
-          ContainerPort: 80
         
 Outputs:
   WpCluster:
