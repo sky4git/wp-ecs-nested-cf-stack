@@ -151,6 +151,47 @@ Resources:
               - "servicediscovery:RegisterInstance"
               - "servicediscovery:UpdateInstanceCustomHealthStatus"
             Resource: '*'
+          - 
+            Effect: "Allow"
+            Action:
+              - "elasticloadbalancing:ModifyListener"
+              - "elasticloadbalancing:CreateLoadBalancer"
+              - "elasticloadbalancing:RegisterTargets"
+              - "elasticloadbalancing:CreateTargetGroup"
+              - "elasticloadbalancing:DeregisterTargets"
+              - "elasticloadbalancing:SetIpAddressType"
+              - "elasticloadbalancing:SetSubnets"
+              - "elasticloadbalancing:RemoveListenerCertificates"
+              - "elasticloadbalancing:DeleteTargetGroup"
+              - "elasticloadbalancing:DeleteLoadBalancer"
+              - "elasticloadbalancing:RemoveTags"
+              - "elasticloadbalancing:CreateListener"
+              - "elasticloadbalancing:AddTags"
+              - "elasticloadbalancing:CreateRule"
+              - "elasticloadbalancing:SetSecurityGroups"
+              - "elasticloadbalancing:AddListenerCertificates"
+              - "elasticloadbalancing:ModifyLoadBalancerAttributes"
+              - "elasticloadbalancing:ModifyTargetGroupAttributes"
+              - "elasticloadbalancing:ModifyTargetGroup"
+              - "elasticloadbalancing:DeleteListener"             
+            Resource: 
+              - !Sub "arn:aws:elasticloadbalancing:${AWS::Region}:${AWS::AccountId}:targetgroup/*/*"
+              - !Sub "arn:aws:elasticloadbalancing:${AWS::Region}:${AWS::AccountId}:loadbalancer/app/*/*"
+              - !Sub "arn:aws:elasticloadbalancing:${AWS::Region}:${AWS::AccountId}:listener/net/*/*/*"
+              - !Sub "arn:aws:elasticloadbalancing:${AWS::Region}:${AWS::AccountId}:listener/app/*/*/*"
+              - !Sub "arn:aws:elasticloadbalancing:${AWS::Region}:${AWS::AccountId}:loadbalancer/net/*/*"
+          - 
+            Effect: "Allow"
+            Action:
+              - "elasticloadbalancing:DescribeLoadBalancerAttributes"
+              - "elasticloadbalancing:SetWebAcl"
+              - "elasticloadbalancing:DescribeLoadBalancers"
+              - "elasticloadbalancing:DescribeListeners"
+              - "elasticloadbalancing:DescribeTargetGroupAttributes"
+              - "elasticloadbalancing:DescribeTargetHealth"
+              - "elasticloadbalancing:DescribeTargetGroups"
+              - "elasticloadbalancing:DescribeRules"            
+            Resource: '*'
           -
             Effect: "Allow"
             Action:
