@@ -1,5 +1,8 @@
 Description: 'ECS stack for WordPress'
 Parameters:
+  VPCID:
+    Type: AWS::EC2::VPC::Id
+    Description: Enter a valid VPC Id
   ClusterName:
     Type: String
     Description: Name of cluster
@@ -142,6 +145,47 @@ Resources:
           DockerVolumeConfiguration:
             Scope: shared
             Autoprovision: true
+  ALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties: 
+      IpAddressType: dualstack
+      Name: 'alb-ecs-wordpress'
+      Scheme: 'internet-facing'
+      SecurityGroups: 
+        - !Select [0, !Ref SecurityGroups ]
+      Subnets: 
+        - !Select [0, !Ref PublicSubnets ]
+        - !Select [1, !Ref PublicSubnets ]
+        - !Select [2, !Ref PublicSubnets ]
+      Tags: 
+        - Key: Name
+          Value: ECSStackALB
+      Type: application
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties: 
+      HealthCheckIntervalSeconds: 60
+      HealthCheckPath: '/hello.html'
+      HealthCheckPort: 80
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 30
+      HealthyThresholdCount: 5
+      Name: ECSALB
+      Matcher:
+        HttpCode: 200
+      Port: 80
+      Protocol: HTTP
+      Tags: 
+        - Key: Name
+          Value: ECSStackALBTargetGroup
+      UnhealthyThresholdCount: 2
+      VpcId: !Ref VPCID
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties: 
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: HTTP
   WpService:
     Type: AWS::ECS::Service
     DependsOn: WordPressTask
@@ -163,7 +207,11 @@ Resources:
             - !Select [1, !Ref PublicSubnets ]
             - !Select [2, !Ref PublicSubnets ]
       PlatformVersion: LATEST
-      PropagateTags: SERVICE      
+      PropagateTags: SERVICE 
+      LoadBalancers:  
+        - ContainerName: ApacheContainer
+          ContainerPort: 80
+          TargetGroupArn: !Ref ALBTargetGroup    
       SchedulingStrategy: REPLICA
       Tags: 
         - Key: Name
@@ -177,3 +225,5 @@ Outputs:
     Value: !Ref WpService
   WordPressTaskARN:
     Value: !Ref WordPressTask
+  ALBDNS: 
+    Value: !GetAtt ALB.DNSName  

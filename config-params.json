@@ -45,7 +45,7 @@
     },
     {
         "ParameterKey": "MasterUsername",
-        "ParameterValue": "WPDBuser"
+        "ParameterValue": "wpdbuser"
     },
     {
         "ParameterKey": "MasterUserPassword",

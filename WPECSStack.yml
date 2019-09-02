@@ -153,6 +153,7 @@ Resources:
       TemplateURL:
         Fn::Sub: "https://s3.amazonaws.com/${TemplatePath}/ecs-stack.yml"
       Parameters:
+        VPCID: !GetAtt VPCStack.Outputs.VPCID
         ClusterName: !Ref ClusterName
         PublicSubnets: !GetAtt VPCStack.Outputs.PublicSubnets
         SecurityGroups: !GetAtt SecurityStack.Outputs.SecurityGroups
