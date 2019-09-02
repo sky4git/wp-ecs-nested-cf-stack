@@ -148,7 +148,7 @@ Resources:
   ALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties: 
-      IpAddressType: dualstack
+      IpAddressType: ipv4
       Name: 'alb-ecs-wordpress'
       Scheme: 'internet-facing'
       SecurityGroups: 
