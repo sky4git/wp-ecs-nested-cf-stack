@@ -116,6 +116,8 @@ Resources:
           Essential: True
           PortMappings: 
             - ContainerPort: 9000
+            - ContainerPort: 3306
+              HostPort: 3306
           MountPoints:
             - ContainerPath: '/usr/local/apache2/htdocs'
               SourceVolume: WordPressTaskVolume
