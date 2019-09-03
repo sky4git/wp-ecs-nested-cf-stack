@@ -192,7 +192,9 @@ Resources:
       Protocol: HTTP
   WpService:
     Type: AWS::ECS::Service
-    DependsOn: WordPressTask
+    DependsOn: 
+      - WordPressTask
+      - ALBListener
     Properties: 
       ServiceName: WordPressService
       Cluster: !Ref WpCluster
