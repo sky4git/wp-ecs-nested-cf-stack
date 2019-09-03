@@ -170,7 +170,7 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 30
       HealthyThresholdCount: 5
-      Name: ECSALB
+      Name: ECSStackALBTargetGroup
       Matcher:
         HttpCode: 200
       Port: 80
@@ -178,6 +178,7 @@ Resources:
       Tags: 
         - Key: Name
           Value: ECSStackALBTargetGroup
+      TargetType: ip
       UnhealthyThresholdCount: 2
       VpcId: !Ref VPCID
   ALBListener:
