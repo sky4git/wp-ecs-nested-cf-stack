@@ -45,15 +45,15 @@
     },
     {
         "ParameterKey": "MasterUsername",
-        "ParameterValue": "wpdbuser"
+        "ParameterValue": "wpecsdbuser"
     },
     {
         "ParameterKey": "MasterUserPassword",
-        "ParameterValue": "69AtNsfbm4S2hfS"
+        "ParameterValue": "69AtNsfbv4S2hfS"
     },
     {
         "ParameterKey": "DBName",
-        "ParameterValue": "WordPressDB"
+        "ParameterValue": "WordPressECSDB"
     },
     {
         "ParameterKey": "RDSDBEngine",
