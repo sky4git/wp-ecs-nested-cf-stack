@@ -94,6 +94,8 @@ Resources:
               - "ssm:GetParametersByPath"
               - "ssm:LabelParameterVersion"
               - "ssm:PutParameter"
+              - "ssm:AddTagsToResource"
+              - "ssm:RemoveTagsFromResource"
             Resource: 
               - '*'
           -
