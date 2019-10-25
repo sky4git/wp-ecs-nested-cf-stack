@@ -128,7 +128,6 @@ Resources:
   SSMDBName:
     Type: AWS::SSM::Parameter
     Properties: 
-      AllowedPattern: String
       Description: Database Name
       Name: ECSStackDBName        
       Type: String
@@ -136,7 +135,6 @@ Resources:
   SSMasterUsername:
     Type: AWS::SSM::Parameter
     Properties: 
-      AllowedPattern: String
       Description: Database User Name
       Name: ECSStackDBUSER        
       Type: String
@@ -144,7 +142,6 @@ Resources:
   SSMasterUserPassword:
     Type: AWS::SSM::Parameter
     Properties: 
-      AllowedPattern: String
       Description: Database User Password
       Name: ECSStackDBUSERPasswd        
       Type: String
@@ -153,7 +150,6 @@ Resources:
     DependsOn: AuroraCluster
     Type: AWS::SSM::Parameter
     Properties: 
-      AllowedPattern: String
       Description: Database User Password
       Name: ECSStackDBUSER        
       Type: String
