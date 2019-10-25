@@ -85,6 +85,20 @@ Resources:
           -
             Effect: "Allow"
             Action:
+              - "ssm:DeleteParameter"
+              - "ssm:DeleteParameters"
+              - "ssm:DescribeParameters"
+              - "ssm:GetParameter"
+              - "ssm:GetParameterHistory"
+              - "ssm:GetParameters"
+              - "ssm:GetParametersByPath"
+              - "ssm:LabelParameterVersion"
+              - "ssm:PutParameter"
+            Resource: 
+              - '*'
+          -
+            Effect: "Allow"
+            Action:
               - "codebuild:CreateWebhook"
               - "codebuild:DeleteWebhook"
               - "codebuild:CreateProject"
