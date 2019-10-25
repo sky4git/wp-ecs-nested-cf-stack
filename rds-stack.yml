@@ -131,7 +131,6 @@ Resources:
       AllowedPattern: String
       Description: Database Name
       Name: ECSStackDBName        
-      Tier: STANDARD
       Type: String
       Value: !Ref DBName
   SSMasterUsername:
@@ -140,7 +139,6 @@ Resources:
       AllowedPattern: String
       Description: Database User Name
       Name: ECSStackDBUSER        
-      Tier: Standard
       Type: String
       Value: !Ref MasterUsername
   SSMasterUserPassword:
@@ -149,7 +147,6 @@ Resources:
       AllowedPattern: String
       Description: Database User Password
       Name: ECSStackDBUSERPasswd        
-      Tier: Standard
       Type: String
       Value: !Ref MasterUserPassword
   SSDBEndpoint:
@@ -159,7 +156,6 @@ Resources:
       AllowedPattern: String
       Description: Database User Password
       Name: ECSStackDBUSER        
-      Tier: Standard
       Type: String
       Value: !GetAtt AuroraCluster.Endpoint.Address
 
