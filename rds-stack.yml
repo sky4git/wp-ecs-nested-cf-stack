@@ -125,35 +125,35 @@ Resources:
         Tags:
           - Key: Name
             Value: RDSReplica
-  SSMDBName:
-    Type: AWS::SSM::Parameter
-    Properties: 
-      Description: Database Name
-      Name: ECSStackDBName        
-      Type: String
-      Value: !Ref DBName
-  SSMasterUsername:
-    Type: AWS::SSM::Parameter
-    Properties: 
-      Description: Database User Name
-      Name: ECSStackDBUSER        
-      Type: String
-      Value: !Ref MasterUsername
-  SSMasterUserPassword:
-    Type: AWS::SSM::Parameter
-    Properties: 
-      Description: Database User Password
-      Name: ECSStackDBUSERPasswd        
-      Type: String
-      Value: !Ref MasterUserPassword
-  SSDBEndpoint:
-    DependsOn: AuroraCluster
-    Type: AWS::SSM::Parameter
-    Properties: 
-      Description: Database User Password
-      Name: ECSStackDBUSER        
-      Type: String
-      Value: !GetAtt AuroraCluster.Endpoint.Address
+  # SSMDBName:
+  #   Type: AWS::SSM::Parameter
+  #   Properties: 
+  #     Description: Database Name
+  #     Name: ECSStackDBName        
+  #     Type: String
+  #     Value: !Ref DBName
+  # SSMasterUsername:
+  #   Type: AWS::SSM::Parameter
+  #   Properties: 
+  #     Description: Database User Name
+  #     Name: ECSStackDBUSER        
+  #     Type: String
+  #     Value: !Ref MasterUsername
+  # SSMasterUserPassword:
+  #   Type: AWS::SSM::Parameter
+  #   Properties: 
+  #     Description: Database User Password
+  #     Name: ECSStackDBUSERPasswd        
+  #     Type: String
+  #     Value: !Ref MasterUserPassword
+  # SSDBEndpoint:
+  #   DependsOn: AuroraCluster
+  #   Type: AWS::SSM::Parameter
+  #   Properties: 
+  #     Description: Database User Password
+  #     Name: ECSStackDBUSER        
+  #     Type: String
+  #     Value: !GetAtt AuroraCluster.Endpoint.Address
 
 Conditions:
   IsNotServerLess: !Not [ !Equals [!Ref RDSEngineMode, serverless] ]
