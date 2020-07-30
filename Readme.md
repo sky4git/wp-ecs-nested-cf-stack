@@ -47,6 +47,8 @@ In the [wp-ecs-nested-cf-stack](wp-ecs-nested-cf-stack/) directory there are mul
 
 **[vpc-stack.yml](wp-ecs-nested-cf-stack/vpc-stack.yml):** is the CloudFormation template to create the base VPC, Subnets, NAT Gateways, etc which will be used.
 **[security-stack.yml](wp-ecs-nested-cf-stack/security-stack.yml):** is the CloudFormation template to create the SecurityGroups.
+**[ecs-stack.yml](wp-ecs-nested-cf-stack/ecs-stack.yml):** is the CloudFormation template to create the ECS cluster.
+**[rds-stack.yml](wp-ecs-nested-cf-stack/rds-stack.yml):** is the CloudFormation template to create the RDS cluster.
 **[config-params.json](wp-ecs-nested-cf-stack/cofig-params.json):** is the parameters file which contains the parameter values for the CFN template. 
 
 To create a new enviroment, just update ***config-params.json*** file with the new values and push the changes in github.
