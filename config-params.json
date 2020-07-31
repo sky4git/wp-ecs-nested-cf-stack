@@ -61,7 +61,7 @@
     },
     {
         "ParameterKey": "RDSEngineMode",
-        "ParameterValue": "serverless"
+        "ParameterValue": "provisioned"
     },
     {
         "ParameterKey": "RDSInstaceType",
