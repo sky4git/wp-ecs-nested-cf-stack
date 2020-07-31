@@ -50,7 +50,6 @@ Resources:
               - "iam:AddRoleToInstanceProfile"
               - "iam:AttachRolePolicy"
               - "iam:CreateInstanceProfile"
-              - "iam:CreatePolicy"
               - "iam:CreateRole"
               - "iam:DeleteInstanceProfile"
               - "iam:DeletePolicy"
@@ -61,16 +60,22 @@ Resources:
               - "iam:GetPolicy"
               - "iam:GetRole"
               - "iam:GetRolePolicy"
-              - "iam:ListAttachedRolePolicies"
-              - "iam:ListInstanceProfiles"
-              - "iam:ListInstanceProfilesForRole"
-              - "iam:ListRolePolicies"
-              - "iam:ListRoles"
               - "iam:PassRole"
               - "iam:PutRolePolicy"
               - "iam:RemoveRoleFromInstanceProfile"
             Resource: 
               - !Sub 'arn:aws:iam::${AWS::AccountId}:role/WordPressECSTaskExecutionRole*'
+          -
+            Effect: "Allow"
+            Action:
+              - "iam:ListRoles"
+              - "iam:ListAttachedRolePolicies"
+              - "iam:ListInstanceProfiles"
+              - "iam:ListInstanceProfilesForRole"
+              - "iam:ListRolePolicies"
+              - "iam:CreatePolicy"
+            Resource:
+              - "*"      
           -
             Effect: "Allow"
             Action:
@@ -296,6 +301,7 @@ Resources:
           -
             Effect: "Allow"
             Action:
+              - "rds:AddTagsToResource"
               - "rds:CreateDBCluster"
               - "rds:DeleteDBCluster"
               - "rds:CreateDBClusterParameterGroup"
@@ -303,24 +309,16 @@ Resources:
               - "rds:CreateDBInstance"
               - "rds:DeleteDBInstance"
               - "rds:CreateDBInstanceReadReplica"
-              - "rds:DeleteDBInstanceReadReplica"
               - "rds:CreateDBSnapshot"
               - "rds:DeleteDBSnapshot"
               - "rds:CreateDBSubnetGroup"
               - "rds:DeleteDBSubnetGroup"
-              - "rds:DescribeDBSubnetGroups"
               - "rds:CreateDBClusterSnapshot"
               - "rds:DeleteDBClusterSnapshot"
-              - "rds:DescribeDBClusterSnapshots"
               - "rds:CreateOptionGroup"
               - "rds:DeleteOptionGroup"
               - "rds:CreateDBSecurityGroup"
               - "rds:DeleteDBSecurityGroup"
-              - "rds:DescribeDBClusters"
-              - "rds:DescribeDBEngineVersions"
-              - "rds:DescribeDBInstances"
-              - "rds:DescribeDBParameterGroups"
-              - "rds:DescribeOptionGroups"
               - "rds:ModifyDBCluster"
               - "rds:ModifyDBClusterParameterGroup"
               - "rds:ModifyDBClusterSnapshotAttribute"
@@ -330,7 +328,20 @@ Resources:
               - "rds:ModifyDBSubnetGroup"
               - "rds:ModifyOptionGroup"
             Resource: 
-              - !Sub "arn:aws:rds:${AWS::Region}:${AWS::AccountId}:*"
+              - "*"
+              #- !Sub "arn:aws:rds:${AWS::Region}:${AWS::AccountId}:*"
+          -
+            Effect: "Allow"
+            Action:
+              - "rds:DescribeDBSubnetGroups"
+              - "rds:DescribeDBClusterSnapshots"
+              - "rds:DescribeDBClusters"
+              - "rds:DescribeDBEngineVersions"
+              - "rds:DescribeDBInstances"
+              - "rds:DescribeDBParameterGroups"
+              - "rds:DescribeOptionGroups"
+            Resource: 
+              - "*"
       Roles:
         - !Ref IAMCodeBuildRole
   S3Bucket:
