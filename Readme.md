@@ -60,3 +60,7 @@ You can either update it from Console or you can update it from CLI command line
 aws codebuild update-project --name "CodebuidProjectName" --environment "type=LINUX_CONTAINER,image=aws/codebuild/standard:2.0,computeType=BUILD_GENERAL1_SMALL,environmentVariables=[{name=TEMPLATE_BUCKET,value=bucket_name_here,type=PLAINTEXT},{name=TEMPLATE_PREFIX,value=prod,type=PLAINTEXT}],imagePullCredentialsType=CODEBUILD"
 ```
 Please replace *CodebuidProjectName* with your actual project name and *bucket_name_here* with your S3 bucket name.
+
+# Reference architecture
+Please note that not all components are in the template. such as codepipeline, sqs, waf and cloudfront distribution at this stage.
+![Reference architecture](/WordPress-on-Cloud-Simple.jpg "Reference architecture")
